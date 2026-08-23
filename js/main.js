@@ -3,7 +3,9 @@
 
   var reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
-  /* Scroll reveals — sections drift in once, then unobserve */
+  /* Scroll reveals — sections drift in once, then unobserve.
+     The timeline panel shares this mechanism: .in also triggers
+     the axis draw-in and event stagger (see CSS). */
   var revealed = document.querySelectorAll('.reveal');
   if ('IntersectionObserver' in window && !reduced) {
     var io = new IntersectionObserver(function (entries) {
@@ -59,6 +61,26 @@
       });
     }, { threshold: 0.3 });
     if (stats) cio.observe(stats); else finishAll();
+  }
+
+  /* Station clock — Asia/Dhaka, 24h */
+  var clock = document.getElementById('clock');
+  if (clock) {
+    var fmt;
+    try {
+      fmt = new Intl.DateTimeFormat('en-GB', {
+        timeZone: 'Asia/Dhaka', hour12: false,
+        hour: '2-digit', minute: '2-digit', second: '2-digit'
+      });
+    } catch (e) { fmt = null; }
+
+    function tick() {
+      var t = fmt ? fmt.format(new Date()) : '';
+      if (t === '24:00:00') t = '00:00:00'; /* en-GB edge case at midnight */
+      clock.textContent = t;
+    }
+    tick();
+    setInterval(tick, 1000);
   }
 
   /* Footer year */

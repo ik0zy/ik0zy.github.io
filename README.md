@@ -1,7 +1,12 @@
 # ik0zy.github.io
 
-Personal portfolio of Mohammad Saidul Islam — designed as a printed analytics report:
-paper tones, hairline rules, tabular numerals, and hand-drawn SVG chart marks.
+Personal portfolio of Mohammad Saidul Islam — **v2 "Telemetry"**: a dark instrument-panel
+take on the same data. Monospace-led, phosphor-amber accent, live Dhaka clock,
+hand-drawn SVG event timeline.
+
+The previous light "analytics report" design is preserved on the
+[`design-v1-analytics`](https://github.com/ik0zy/ik0zy.github.io/tree/design-v1-analytics)
+branch (tag: `v1-analytics-report`).
 
 **Live:** https://ik0zy.github.io
 

@@ -11,8 +11,7 @@
   <meta property="og:type" content="website">
   <meta property="og:url" content="https://ik0zy.github.io/">
   <meta name="twitter:card" content="summary">
-  <meta name="theme-color" media="(prefers-color-scheme: light)" content="#faf8f3">
-  <meta name="theme-color" media="(prefers-color-scheme: dark)" content="#14120d">
+  <meta name="theme-color" content="#0e0f11">
   <link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
   <link rel="stylesheet" href="css/style.css">
 </head>
@@ -20,9 +19,14 @@
   <a class="skip mono" href="#about">Skip to content</a>
 
   <header class="topbar">
-    <div class="wrap bar-inner">
-      <a class="brand mono" href="#top">M.S. Islam</a>
-      <nav class="mono" aria-label="Sections">
+    <div class="wrap bar-inner mono">
+      <a class="brand" href="#top">MSI<span class="dim">//</span>TELEMETRY</a>
+      <div class="feedbar">
+        <span class="livedot" aria-hidden="true"></span><span class="live">LIVE</span>
+        <span class="dim" aria-hidden="true">·</span>
+        <span>DHAKA&ensp;<span id="clock" title="Local time, Asia/Dhaka">--:--:--</span></span>
+      </div>
+      <nav aria-label="Sections">
         <a href="#about">About</a>
         <a href="#record">Record</a>
         <a href="#publication">Publication</a>
@@ -34,28 +38,83 @@
 
   <main id="main">
     <section class="hero wrap" id="top">
-      <p class="kicker mono reveal">Analytics Report — Vol. 01&ensp;·&ensp;Dhaka, Bangladesh&ensp;·&ensp;23.81° N, 90.41° E</p>
-      <h1 class="reveal">Mohammad Saidul Islam<span class="dot">.</span></h1>
-      <p class="lede reveal">Data science undergraduate who competes at the sharp end of Kaggle leaderboards and publishes at IEEE conferences.</p>
+      <p class="kicker mono reveal">STATION: DHAKA — 23.81° N, 90.41° E — FEED STABLE</p>
+      <h1 class="mono reveal">MOHAMMAD SAIDUL ISLAM<span class="cursor" aria-hidden="true"></span></h1>
+      <p class="lede reveal">Data science undergraduate at UIU. I compete on Kaggle, publish ML research, and build tools when something annoys me enough.</p>
+
+      <figure class="timeline reveal" id="timeline">
+        <figcaption class="panelhead mono">EVENT TIMELINE — 2023 → PRESENT
+          <span class="legend"><i class="dot solid"></i>RESULT<i class="dot hollow"></i>FOUNDATION</span>
+        </figcaption>
+        <svg viewBox="0 0 1000 210" role="img" aria-label="Timeline of milestones from 2023 to present: BSc begins September 2023; UIU-Calendar released 2024; ICCIT paper 2025; two first-place finishes in 2026; Kaggle Expert tier and Co-Head of Competitions in 2026.">
+          <line class="axis" x1="20" y1="105" x2="980" y2="105"/>
+          <g class="ticklabels mono" aria-hidden="true">
+            <text x="137" y="198">2024</text>
+            <text x="460" y="198">2025</text>
+            <text x="783" y="198">2026</text>
+          </g>
+          <g class="ticks" aria-hidden="true">
+            <line x1="137" y1="101" x2="137" y2="109"/>
+            <line x1="460" y1="101" x2="460" y2="109"/>
+            <line x1="783" y1="101" x2="783" y2="109"/>
+          </g>
+
+          <g class="evt">
+            <line class="stem" x1="30" y1="105" x2="30" y2="77"/>
+            <circle class="hollow" cx="30" cy="105" r="5"/>
+            <text class="lbl mono" x="30" y="68" text-anchor="start">09/23 · B.SC. BEGINS</text>
+          </g>
+          <g class="evt">
+            <line class="stem" x1="137" y1="105" x2="137" y2="133"/>
+            <circle class="hollow" cx="137" cy="105" r="5"/>
+            <text class="lbl mono" x="137" y="148" text-anchor="middle">’24 · UIU-CALENDAR</text>
+          </g>
+          <g class="evt">
+            <line class="stem" x1="460" y1="105" x2="460" y2="77"/>
+            <circle class="solid" cx="460" cy="105" r="5"/>
+            <text class="lbl mono" x="460" y="68" text-anchor="middle">’25 · IEEE ICCIT PAPER</text>
+          </g>
+          <g class="evt">
+            <line class="stem" x1="800" y1="105" x2="800" y2="133"/>
+            <circle class="solid" cx="800" cy="105" r="5"/>
+            <text class="lbl mono" x="800" y="148" text-anchor="middle">01/26 · BREAKTHROUGH 1.0</text>
+          </g>
+          <g class="evt">
+            <line class="stem" x1="890" y1="105" x2="890" y2="49"/>
+            <circle class="solid" cx="890" cy="105" r="5"/>
+            <text class="lbl mono" x="890" y="40" text-anchor="middle">04/26 · EXPERT TIER</text>
+          </g>
+          <g class="evt">
+            <line class="stem" x1="916" y1="105" x2="916" y2="161"/>
+            <circle class="solid" cx="916" cy="105" r="5"/>
+            <text class="lbl mono" x="916" y="176" text-anchor="end">05/26 · BREAKTHROUGH 2.0</text>
+          </g>
+          <g class="evt">
+            <line class="stem" x1="978" y1="105" x2="978" y2="77"/>
+            <circle class="hollow" cx="978" cy="105" r="5"/>
+            <text class="lbl mono" x="978" y="68" text-anchor="end">07/26 · UIU DSC CO-HEAD</text>
+          </g>
+        </svg>
+      </figure>
 
       <div class="stats reveal" id="stats">
         <div class="stat" role="listitem">
-          <svg class="mark" viewBox="0 0 48 16" aria-hidden="true"><rect x="21" y="2" width="6" height="14" fill="currentColor"/></svg>
+          <span class="idx mono dim">01</span>
           <span class="num mono"><span data-count="1" data-duration="600">0</span></span>
           <span class="lbl">IEEE publication — ICCIT &rsquo;25, indexed in Xplore</span>
         </div>
         <div class="stat" role="listitem">
-          <svg class="mark" viewBox="0 0 48 16" aria-hidden="true" fill="currentColor"><rect x="4" y="12" width="6" height="4"/><rect x="16" y="8" width="6" height="8"/><rect x="28" y="4" width="6" height="12"/><rect x="40" y="0" width="6" height="16"/></svg>
+          <span class="idx mono dim">02</span>
           <span class="num mono">Expert</span>
           <span class="lbl">Current Kaggle competitions tier</span>
         </div>
         <div class="stat" role="listitem">
-          <svg class="mark" viewBox="0 0 48 16" aria-hidden="true"><rect x="0" y="7" width="48" height="2" fill="currentColor" opacity=".22"/><rect x="0" y="7" width="46.8" height="2" fill="currentColor"/><circle cx="46.8" cy="8" r="3.2" fill="currentColor"/></svg>
+          <span class="idx mono dim">03</span>
           <span class="num mono"><span data-count="40">0</span><sup>th</sup></span>
           <span class="lbl">of 1,564 teams — top 3% (RecodAI)</span>
         </div>
         <div class="stat" role="listitem">
-          <svg class="mark" viewBox="0 0 48 16" aria-hidden="true"><circle cx="7" cy="8" r="3.2" fill="currentColor"/><circle cx="19" cy="8" r="3.2" fill="currentColor"/><circle cx="31" cy="8" r="3.2" fill="none" stroke="currentColor" stroke-width="1.5" opacity=".35"/><circle cx="43" cy="8" r="3.2" fill="none" stroke="currentColor" stroke-width="1.5" opacity=".35"/></svg>
+          <span class="idx mono dim">04</span>
           <span class="num mono"><span data-count="2">0</span>×</span>
           <span class="lbl">First-place finishes, intra-university series</span>
         </div>
@@ -64,7 +123,7 @@
 
     <section class="sec wrap" id="about">
       <header class="sechead reveal">
-        <span class="fig mono">Fig. 01</span>
+        <span class="fig mono">SEC.01</span>
         <h2>About</h2>
       </header>
       <div class="prose reveal">
@@ -75,7 +134,7 @@
 
     <section class="sec wrap" id="record">
       <header class="sechead reveal">
-        <span class="fig mono">Fig. 02</span>
+        <span class="fig mono">SEC.02</span>
         <h2>Competition Record</h2>
       </header>
       <div class="tablewrap reveal">
@@ -112,7 +171,7 @@
 
     <section class="sec wrap" id="publication">
       <header class="sechead reveal">
-        <span class="fig mono">Fig. 03</span>
+        <span class="fig mono">SEC.03</span>
         <h2>Publication</h2>
       </header>
       <article class="citecard reveal">
@@ -125,7 +184,7 @@
 
     <section class="sec wrap" id="projects">
       <header class="sechead reveal">
-        <span class="fig mono">Fig. 04</span>
+        <span class="fig mono">SEC.04</span>
         <h2>Projects</h2>
       </header>
       <article class="entry reveal">
@@ -138,7 +197,7 @@
 
     <section class="sec wrap" id="leadership">
       <header class="sechead reveal">
-        <span class="fig mono">Fig. 05</span>
+        <span class="fig mono">SEC.05</span>
         <h2>Leadership</h2>
       </header>
       <article class="entry reveal">
@@ -150,7 +209,7 @@
 
     <section class="sec wrap" id="skills">
       <header class="sechead reveal">
-        <span class="fig mono">Fig. 06</span>
+        <span class="fig mono">SEC.06</span>
         <h2>Tooling</h2>
       </header>
       <div class="skillgrid reveal">
@@ -175,7 +234,7 @@
 
     <section class="sec wrap" id="education">
       <header class="sechead reveal">
-        <span class="fig mono">Fig. 07</span>
+        <span class="fig mono">SEC.07</span>
         <h2>Education</h2>
       </header>
       <div class="edurow reveal">
@@ -186,7 +245,7 @@
 
     <section class="sec wrap" id="contact">
       <header class="sechead reveal">
-        <span class="fig mono">Fig. 08</span>
+        <span class="fig mono">SEC.08</span>
         <h2>Contact</h2>
       </header>
       <div class="reveal">
@@ -204,7 +263,7 @@
 
   <footer class="wrap colophon mono">
     <span>© <span id="yr">2026</span> Mohammad Saidul Islam</span>
-    <span>Set in Archivo &amp; IBM Plex Mono — charts drawn by hand</span>
+    <span>Set in IBM Plex Mono &amp; Archivo — every mark drawn by hand</span>
     <a href="https://github.com/ik0zy/ik0zy.github.io" rel="noopener">Source ↗</a>
   </footer>
 
