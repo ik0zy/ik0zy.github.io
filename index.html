@@ -3,38 +3,44 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Mohammad Saidul Islam — Field Survey of a Data Scientist</title>
-  <meta name="description" content="Mohammad Saidul Islam — data science undergraduate at UIU, Kaggle Competitions Expert, IEEE-published researcher. A portfolio drawn as a topographic survey: plotted markers, contour lines and a legend instead of bullet points.">
+  <title>Mohammad Saidul Islam — Data Science Portfolio</title>
+  <meta name="description" content="Mohammad Saidul Islam — data science undergraduate at UIU, Kaggle Competitions Expert, IEEE-published researcher. Portfolio, competition record and open-source work.">
   <link rel="canonical" href="https://ik0zy.github.io/">
-  <meta property="og:title" content="Field Survey №5 — Mohammad Saidul Islam">
-  <meta property="og:description" content="Kaggle Competitions Expert · IEEE-published · 2× first place. A portfolio in ink on paper: explore the terrain, read the legend, find the markers.">
+  <meta property="og:title" content="Mohammad Saidul Islam — Data Science">
+  <meta property="og:description" content="Kaggle Competitions Expert · IEEE-published · 2× first place. Portfolio, competition record and open-source work.">
   <meta property="og:type" content="website">
   <meta property="og:url" content="https://ik0zy.github.io/">
   <meta name="twitter:card" content="summary">
   <meta name="theme-color" content="#f3ecdc">
   <link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
-  <link rel="stylesheet" href="css/style.css?v=5b">
+  <link rel="stylesheet" href="css/style.css?v=5c">
 </head>
 <body>
   <a class="skip mono" href="#main">Skip to content</a>
 
+  <!-- terminal prompt + sticky status bar -->
+  <p class="promptline mono wrap" aria-hidden="true">saidul@ik0zy:~/portfolio</p>
+  <div class="statusbar mono" id="statusbar" role="status" aria-label="Reading progress">
+    <span class="sb-left">[saidul@ik0zy] ~ <span id="sbSection">intro</span></span>
+    <span class="sb-right"><span class="sb-blocks" id="sbBlocks"></span> <span id="sbPct">0%</span></span>
+  </div>
+
   <!-- ══════════ TITLE BLOCK ══════════ -->
-  <header class="titleblock wrap" id="top">
+  <header class="titleblock wrap" id="top" data-section="intro">
     <div class="tb-grid mono" aria-hidden="true">
       <span>A</span><span>B</span><span>C</span><span>D</span><span>E</span><span>F</span>
       <span>1</span><span>2</span><span>3</span><span>4</span><span>5</span><span>6</span>
     </div>
 
-    <p class="tb-over mono reveal">GOVERNMENT SURVEY DEPARTMENT · DHAKA CIRCLE · SHEET 5 OF 5</p>
-    <h1 class="tb-title reveal">FIELD<br>SURVEY<span class="treg">®</span></h1>
-    <p class="tb-sub reveal">of the professional territory of</p>
-    <p class="tb-name reveal">MOHAMMAD SAIDUL ISLAM</p>
+    <p class="tb-over mono reveal">DATA SCIENCE PORTFOLIO · DHAKA, BANGLADESH</p>
+    <h1 class="tb-title reveal">MOHAMMAD<br>SAIDUL ISLAM</h1>
+    <p class="tb-sub reveal">Data science undergraduate at UIU — <mark>Kaggle Competitions Expert</mark>, <mark>IEEE-published</mark> researcher, and builder of tools people actually use.</p>
 
-    <dl class="tbcartouche reveal" aria-label="Survey metadata">
-      <div><dt class="mono">SCALE</dt><dd class="mono">1 : 1 (life-size)</dd></div>
-      <div><dt class="mono">DATUM</dt><dd class="mono">Dhaka, Bangladesh</dd></div>
-      <div><dt class="mono">SURVEYED</dt><dd class="mono">2018 — present</dd></div>
-      <div><dt class="mono">RELIEF</dt><dd class="mono">contours at 10 m</dd></div>
+    <dl class="tbcartouche reveal" aria-label="Key facts">
+      <div><dt class="mono">FOCUS</dt><dd class="mono">Machine learning &amp; data science</dd></div>
+      <div><dt class="mono">BASE</dt><dd class="mono">Dhaka, Bangladesh</dd></div>
+      <div><dt class="mono">ACTIVE SINCE</dt><dd class="mono">2018</dd></div>
+      <div><dt class="mono">STATUS</dt><dd class="mono">Open to opportunities</dd></div>
     </dl>
 
     <div class="tbcompass reveal" aria-hidden="true">
@@ -42,23 +48,23 @@
     </div>
   </header>
 
-  <nav class="legendbar mono" aria-label="Legend — section navigation">
-    <span class="lg-title">LEGEND</span>
-    <a href="#peak"><i class="sw sw-tri"></i>PEAKS</a>
-    <a href="#watercourse"><i class="sw sw-line"></i>WATERCOURSE</a>
-    <a href="#monument"><i class="sw sw-sq"></i>MONUMENT</a>
-    <a href="#bench"><i class="sw sw-circ"></i>BENCHMARKS</a>
-    <a href="#instruments"><i class="sw sw-dia"></i>INSTRUMENTS</a>
-    <a href="#office"><i class="sw sw-star"></i>SURVEY OFFICE</a>
+  <nav class="legendbar mono" aria-label="Sections">
+    <span class="lg-title">INDEX</span>
+    <a href="#peak"><i class="sw sw-tri"></i>ACHIEVEMENTS</a>
+    <a href="#watercourse"><i class="sw sw-line"></i>PUBLICATION</a>
+    <a href="#monument"><i class="sw sw-sq"></i>PROJECTS</a>
+    <a href="#bench"><i class="sw sw-circ"></i>EXPERIENCE</a>
+    <a href="#instruments"><i class="sw sw-dia"></i>SKILLS</a>
+    <a href="#office"><i class="sw sw-star"></i>CONTACT</a>
   </nav>
 
   <main id="main">
 
-    <!-- ══════════ I · SURVEY PLATE (interactive map) ══════════ -->
-    <section class="plate-section" aria-label="Interactive survey plate">
+    <!-- ══════════ I · CAREER MAP ══════════ -->
+    <section class="plate-section" data-section="map" aria-label="Interactive career map">
       <div class="wrap platehead-row">
-        <h2 class="sechead reveal"><span class="mono secno">I.</span> THE SURVEY PLATE</h2>
-        <p class="platehint mono reveal">— every marker on the plate is real. click one to survey it.</p>
+        <h2 class="sechead reveal"><span class="mono secno">I.</span> CAREER MAP</h2>
+        <p class="platehint mono reveal">— six markers, each one real. Select one for details.</p>
       </div>
 
       <figure class="plate wrap reveal" id="plate">
@@ -98,7 +104,7 @@
         </svg>
 
         <figcaption class="platecaption mono">
-          PLATE I — GENERAL MAP · <span id="plateStatus">SELECT A MARKER TO BEGIN</span>
+          PLATE I — CAREER MAP · <span id="plateStatus">SELECT A MARKER FOR DETAILS</span>
         </figcaption>
 
         <!-- detail card -->
@@ -112,23 +118,23 @@
       </figure>
     </section>
 
-    <!-- ══════════ II · PEAKS (achievements) ══════════ -->
-    <section class="wrap sect" id="peak" aria-labelledby="h-peak">
-      <h2 class="sechead reveal" id="h-peak"><span class="mono secno">II.</span> PEAKS &amp; ELEVATIONS</h2>
-      <p class="secnote reveal">The highest surveyed points. Elevation figures are honest; the air up here is thin.</p>
+    <!-- ══════════ II · ACHIEVEMENTS ══════════ -->
+    <section class="wrap sect" id="peak" data-section="achievements" aria-labelledby="h-peak">
+      <h2 class="sechead reveal" id="h-peak"><span class="mono secno">II.</span> ACHIEVEMENTS</h2>
+      <p class="secnote reveal">Competition placements and certifications — every figure verifiable on Kaggle or IEEE Xplore.</p>
 
       <article class="peakcard reveal">
         <header class="pk-head">
           <span class="pk-tri" aria-hidden="true">▲</span>
           <h3>Kaggle Competitions Expert</h3>
-          <span class="pk-elev mono">ELEV. 40 / 1564</span>
+          <span class="pk-elev mono">RANK 40 / 1,564</span>
         </header>
         <p class="pk-desc">RecodAI: LUC Scientific Image Forgery Detection. 40th of 1,564 teams — top 3% worldwide — with transfer learning, ensembling and test-time augmentation. Expert tier granted when the leaderboard froze.</p>
-        <div class="elevprofile" role="img" aria-label="Normal distribution of the 1,564-team field. The shaded area under the bell curve — 97.4 percent of it — is the 1,524 teams he beat. The unshaded right tail holds the 39 teams ahead. His marker sits at the 97.4th percentile.">
+        <div class="elevprofile" role="img" aria-label="Normal distribution of the 1,564-team field. The shaded area under the bell curve is the 1,524 teams ranked below 40th place; the unshaded right tail holds the 39 teams ahead. His marker sits at the 97.4th percentile.">
           <svg viewBox="0 0 600 140" aria-hidden="true">
             <text class="ep-headlab" x="8" y="20">THE FIELD — 1,564 TEAMS · NORMALLY DISTRIBUTED BY RANK</text>
-            <text class="ep-you" x="592" y="20" text-anchor="end">YOU — 40TH OF 1,564</text>
-            <!-- area under the curve up to the 97.4th percentile: everyone behind him -->
+            <text class="ep-you" x="592" y="20" text-anchor="end">RANK 40 OF 1,564</text>
+            <!-- area under the curve up to the 97.4th percentile: everyone ranked below -->
             <path class="ep-fillarea" d="M0,118 L0,117.4 L6,117.2 L12,117.1 L18,116.9 L24,116.6 L30,116.4 L36,116.1 L42,115.7 L48,115.3 L54,114.8 L60,114.2 L66,113.6 L72,112.8 L78,112.0 L84,111.1 L90,110.0 L96,108.8 L102,107.5 L108,106.1 L114,104.5 L120,102.7 L126,100.8 L132,98.7 L138,96.5 L144,94.1 L150,91.6 L156,88.8 L162,86.0 L168,83.0 L174,79.8 L180,76.6 L186,73.2 L192,69.8 L198,66.3 L204,62.8 L210,59.3 L216,55.8 L222,52.3 L228,49.0 L234,45.7 L240,42.6 L246,39.7 L252,37.0 L258,34.6 L264,32.4 L270,30.5 L276,28.9 L282,27.6 L288,26.7 L294,26.2 L300,26.0 L306,26.2 L312,26.7 L318,27.6 L324,28.9 L330,30.5 L336,32.4 L342,34.6 L348,37.0 L354,39.7 L360,42.6 L366,45.7 L372,49.0 L378,52.3 L384,55.8 L390,59.3 L396,62.8 L402,66.3 L408,69.8 L414,73.2 L420,76.6 L426,79.8 L432,83.0 L438,86.0 L444,88.8 L450,91.6 L456,94.1 L462,96.5 L468,98.7 L474,100.8 L480,102.7 L484.6,104.1 L484.6,118 Z"/>
             <!-- the bell curve -->
             <path class="ep-curve" d="M0,117.4 L6,117.2 L12,117.1 L18,116.9 L24,116.6 L30,116.4 L36,116.1 L42,115.7 L48,115.3 L54,114.8 L60,114.2 L66,113.6 L72,112.8 L78,112.0 L84,111.1 L90,110.0 L96,108.8 L102,107.5 L108,106.1 L114,104.5 L120,102.7 L126,100.8 L132,98.7 L138,96.5 L144,94.1 L150,91.6 L156,88.8 L162,86.0 L168,83.0 L174,79.8 L180,76.6 L186,73.2 L192,69.8 L198,66.3 L204,62.8 L210,59.3 L216,55.8 L222,52.3 L228,49.0 L234,45.7 L240,42.6 L246,39.7 L252,37.0 L258,34.6 L264,32.4 L270,30.5 L276,28.9 L282,27.6 L288,26.7 L294,26.2 L300,26.0 L306,26.2 L312,26.7 L318,27.6 L324,28.9 L330,30.5 L336,32.4 L342,34.6 L348,37.0 L354,39.7 L360,42.6 L366,45.7 L372,49.0 L378,52.3 L384,55.8 L390,59.3 L396,62.8 L402,66.3 L408,69.8 L414,73.2 L420,76.6 L426,79.8 L432,83.0 L438,86.0 L444,88.8 L450,91.6 L456,94.1 L462,96.5 L468,98.7 L474,100.8 L480,102.7 L484.6,104.1 L490,105.0 L496,106.2 L502,107.4 L508,108.7 L514,110.0 L520,111.2 L526,112.3 L532,113.3 L538,114.2 L544,115.0 L550,115.7 L556,116.3 L562,116.8 L568,117.2 L574,117.5 L580,117.7 L586,117.9 L592,118.0 L598,118.1"/>
@@ -137,16 +143,16 @@
             <!-- YOU at the 97.4th percentile -->
             <line class="ep-youline" x1="484.6" y1="118" x2="484.6" y2="104.1"/>
             <circle class="ep-youdot" cx="484.6" cy="104.1" r="4.5"/>
-            <text class="ep-filllab" x="205" y="110">THE 1,524 BEHIND HIM</text>
-            <text class="ep-tailab" x="552" y="99">39 AHEAD</text>
+            <text class="ep-filllab" x="205" y="110">1,524 TEAMS RANKED BELOW</text>
+            <text class="ep-tailab" x="552" y="99">39 TEAMS AHEAD</text>
             <line class="ep-tailleader" x1="552" y1="103" x2="552" y2="113"/>
             <!-- baseline + axis -->
             <line x1="0" y1="118" x2="600" y2="118" class="ep-base"/>
             <text class="ep-axis" x="4" y="133" text-anchor="start">RANK 1,564</text>
-            <text class="ep-axis" x="300" y="133" text-anchor="middle">THE MEDIAN TEAM</text>
+            <text class="ep-axis" x="300" y="133" text-anchor="middle">FIELD MEDIAN</text>
             <text class="ep-axis" x="596" y="133" text-anchor="end">RANK 1</text>
           </svg>
-          <p class="mono ep-caption">PERCENTILE — 97.4TH OF THE FIELD · SHADED AREA IS EVERY TEAM HE BEAT</p>
+          <p class="mono ep-caption">97.4TH PERCENTILE — SHADED AREA = TEAMS RANKED BELOW 40TH PLACE</p>
         </div>
       </article>
 
@@ -155,7 +161,7 @@
           <header class="pk-head">
             <span class="pk-tri" aria-hidden="true">▲</span>
             <h3>Breakthrough: Customer Decode Challenge</h3>
-            <span class="pk-elev mono">SUMMIT · 1ST</span>
+            <span class="pk-elev mono">RESULT · 1ST PLACE</span>
           </header>
           <p class="pk-desc">First place, UIU intra-Kaggle (Data Science Club). Won on exploratory data analysis, feature engineering and ensemble models.</p>
         </article>
@@ -163,18 +169,18 @@
           <header class="pk-head">
             <span class="pk-tri" aria-hidden="true">▲</span>
             <h3>Breakthrough 2.0: Good Food, Good Gut!</h3>
-            <span class="pk-elev mono">SUMMIT · 1ST</span>
+            <span class="pk-elev mono">RESULT · 1ST PLACE</span>
           </header>
-          <p class="pk-desc">First place again — a classification pipeline predicting restaurant inspection outcomes. Back-to-back summits, no switchbacks.</p>
+          <p class="pk-desc">First place again — a classification pipeline predicting restaurant inspection outcomes. Back-to-back first places.</p>
         </article>
       </div>
     </section>
 
-    <!-- ══════════ III · WATERCOURSE (the paper) ══════════ -->
-    <section class="watersect" id="watercourse" aria-labelledby="h-water">
+    <!-- ══════════ III · PUBLICATION ══════════ -->
+    <section class="watersect" id="watercourse" data-section="publication" aria-labelledby="h-water">
       <div class="wrap">
-        <h2 class="sechead reveal" id="h-water"><span class="mono secno">III.</span> THE WATERCOURSE</h2>
-        <p class="secnote reveal">One river runs through this territory. It is indexed, peer-reviewed, and blue on every map since 2025.</p>
+        <h2 class="sechead reveal" id="h-water"><span class="mono secno">III.</span> PUBLICATION</h2>
+        <p class="secnote reveal">Peer-reviewed research — presented at ICCIT 2025 and indexed on IEEE Xplore.</p>
         <div class="riverdoc reveal">
           <svg class="rd-flow" viewBox="0 0 80 240" aria-hidden="true">
             <path d="M40,0 C52,40 28,72 40,110 C52,148 28,184 40,240" fill="none" stroke="currentColor" stroke-width="5" stroke-linecap="round"/>
@@ -182,17 +188,17 @@
           <div class="rd-text">
             <p class="mono rd-kicker">PUBLICATION · IEEE ICCIT 2025 · INDEXED ON IEEE XPLORE</p>
             <h3>BnSFD: YOLOv12-Based Detection of Bangladeshi Street Foods for Cultural Heritage</h3>
-            <p>Real-time detection of fuchka, jhalmuri and the rest of the street-food canon — framed as cultural preservation, engineered as a YOLOv12 pipeline. The paper treats heritage as something you can measure, and it is right.</p>
+            <p>Real-time detection of Bangladeshi street foods using a YOLOv12 pipeline — documenting local food culture as a computer-vision benchmark. Published at the 28th International Conference on Computer and Information Technology.</p>
             <a class="inkbtn mono" href="https://ieeexplore.ieee.org/document/11490261" rel="noopener">READ ON IEEE XPLORE ↗</a>
           </div>
         </div>
       </div>
     </section>
 
-    <!-- ══════════ IV · MONUMENT (project) ══════════ -->
-    <section class="wrap sect" id="monument" aria-labelledby="h-monument">
-      <h2 class="sechead reveal" id="h-monument"><span class="mono secno">IV.</span> MONUMENTS</h2>
-      <p class="secnote reveal">Structures still standing. One is load-bearing for an entire university's exam schedule.</p>
+    <!-- ══════════ IV · PROJECTS ══════════ -->
+    <section class="wrap sect" id="monument" data-section="projects" aria-labelledby="h-monument">
+      <h2 class="sechead reveal" id="h-monument"><span class="mono secno">IV.</span> PROJECTS</h2>
+      <p class="secnote reveal">Open-source tools, built and maintained in public.</p>
 
       <article class="monument reveal">
         <div class="mn-plan" aria-hidden="true">
@@ -208,16 +214,16 @@
         <div class="mn-body">
           <p class="mono mn-kicker">OPEN-SOURCE APPLICATION · 2024 — PRESENT</p>
           <h3>UIU-Calendar</h3>
-          <p>The university publishes its academic calendar as a PDF. Students need it in their calendars. UIU-Calendar scrapes the PDF into clean CSVs that import straight into Google Calendar — one script, every student on campus, zero copy-pasting. Born of pure annoyance, maintained out of spite.</p>
-          <a class="inkbtn mono" href="https://github.com/ik0zy/UIU-Calendar" rel="noopener">VISIT THE SITE OF WORKS ↗</a>
+          <p>The university publishes its academic calendar as a PDF. Students need it in their calendars. UIU-Calendar scrapes the PDF into clean CSVs that import straight into Google Calendar — one script, every student on campus, zero copy-pasting. Used across campus every trimester.</p>
+          <a class="inkbtn mono" href="https://github.com/ik0zy/UIU-Calendar" rel="noopener">VIEW PROJECT ↗</a>
         </div>
       </article>
     </section>
 
-    <!-- ══════════ V · BENCHMARKS (competitions + leadership) ══════════ -->
-    <section class="wrap sect" id="bench" aria-labelledby="h-bench">
-      <h2 class="sechead reveal" id="h-bench"><span class="mono secno">V.</span> BENCHMARK STONES</h2>
-      <p class="secnote reveal">Fixed reference points, set into the ground so future surveys can check their work.</p>
+    <!-- ══════════ V · EXPERIENCE & EDUCATION ══════════ -->
+    <section class="wrap sect" id="bench" data-section="experience" aria-labelledby="h-bench">
+      <h2 class="sechead reveal" id="h-bench"><span class="mono secno">V.</span> EXPERIENCE &amp; EDUCATION</h2>
+      <p class="secnote reveal">Roles, affiliations and academic record.</p>
 
       <ul class="bm-list">
         <li class="bmark reveal">
@@ -225,7 +231,7 @@
           <div>
             <h3>Co-Head of Competitions — UIU Data Science Club</h3>
             <p class="mono bm-meta">DHAKA · 2026 — PRESENT</p>
-            <p>Runs the Breakthrough series he used to win. Now selects the problems, builds the arenas, and grades the grading.</p>
+            <p>Organizes the club's Kaggle competitions, including the Breakthrough series — problem selection, evaluation and operations.</p>
           </div>
         </li>
         <li class="bmark reveal">
@@ -233,7 +239,6 @@
           <div>
             <h3>BSc in Data Science — United International University</h3>
             <p class="mono bm-meta">DHAKA · 09/2023 — PRESENT</p>
-            <p>The formal triangulation point everything else is measured against.</p>
           </div>
         </li>
         <li class="bmark reveal">
@@ -241,7 +246,7 @@
           <div>
             <h3>HSC, Milestone College — GPA 5.00 / 5.00</h3>
             <p class="mono bm-meta">08/2020 — 07/2022</p>
-            <p>A+ in all subjects. The first contour line worth drawing.</p>
+            <p>A+ in all subjects.</p>
           </div>
         </li>
         <li class="bmark reveal">
@@ -249,36 +254,35 @@
           <div>
             <h3>SSC, Uttara High School &amp; College — GPA 5.00 / 5.00</h3>
             <p class="mono bm-meta">01/2018 — 01/2020</p>
-            <p>Base camp.</p>
           </div>
         </li>
       </ul>
     </section>
 
-    <!-- ══════════ VI · INSTRUMENTS (skills) ══════════ -->
-    <section class="instrumentsect" id="instruments" aria-labelledby="h-inst">
+    <!-- ══════════ VI · SKILLS ══════════ -->
+    <section class="instrumentsect" id="instruments" data-section="skills" aria-labelledby="h-inst">
       <div class="wrap">
-        <h2 class="sechead reveal" id="h-inst"><span class="mono secno">VI.</span> CASE OF INSTRUMENTS</h2>
-        <p class="secnote reveal">Every instrument below has field hours on it. Weight classes are approximate; wear is not.</p>
+        <h2 class="sechead reveal" id="h-inst"><span class="mono secno">VI.</span> SKILLS &amp; TOOLS</h2>
+        <p class="secnote reveal">Primary tools with approximate day-to-day proficiency.</p>
         <ul class="instgrid">
-          <li class="instr reveal"><span class="in-name mono">PYTORCH</span><span class="in-role mono">THEODOLITE</span><p>Heavy, precise, pointed at hard problems until they resolve.</p><i class="wear" style="--w:92%"></i></li>
-          <li class="instr reveal"><span class="in-name mono">SCIKIT-LEARN · PANDAS · NUMPY</span><span class="in-role mono">CHAIN &amp; COMPASS</span><p>The oldest kit in the case. Never unequipped, occasionally forgotten about.</p><i class="wear" style="--w:96%"></i></li>
-          <li class="instr reveal"><span class="in-name mono">HUGGING FACE TRANSFORMERS</span><span class="in-role mono">HELIOGRAPH</span><p>Signals over long distances. Handle fine-tuning data with care.</p><i class="wear" style="--w:80%"></i></li>
-          <li class="instr reveal"><span class="in-name mono">OPENCV · ALBUMENTATIONS · TIMM</span><span class="in-role mono">PLANE TABLE</span><p>For when the terrain itself is the image and it may be lying.</p><i class="wear" style="--w:85%"></i></li>
-          <li class="instr reveal"><span class="in-name mono">SQL</span><span class="in-role mono">SURVEY CHAIN</span><p>Measures in fixed units. Moves tables without complaint.</p><i class="wear" style="--w:78%"></i></li>
-          <li class="instr reveal"><span class="in-name mono">W&amp;B · GIT · JUPYTER · KAGGLE</span><span class="in-role mono">FIELD NOTEBOOKS</span><p>Record what was tried, at what hour, and why it failed. Mostly the why-it-failed part.</p><i class="wear" style="--w:90%"></i></li>
+          <li class="instr reveal"><span class="in-name mono">PYTORCH</span><span class="in-role mono">DEEP LEARNING</span><p>Primary deep-learning framework — model building, training and experimentation.</p><i class="wear" style="--w:92%"></i></li>
+          <li class="instr reveal"><span class="in-name mono">SCIKIT-LEARN · PANDAS · NUMPY</span><span class="in-role mono">CORE DATA STACK</span><p>Daily drivers for data manipulation, classical ML and analysis.</p><i class="wear" style="--w:96%"></i></li>
+          <li class="instr reveal"><span class="in-name mono">HUGGING FACE TRANSFORMERS</span><span class="in-role mono">NLP / TRANSFORMERS</span><p>Pre-trained models and fine-tuning pipelines for language tasks.</p><i class="wear" style="--w:80%"></i></li>
+          <li class="instr reveal"><span class="in-name mono">OPENCV · ALBUMENTATIONS · TIMM</span><span class="in-role mono">COMPUTER VISION</span><p>Image processing, augmentation and vision architectures.</p><i class="wear" style="--w:85%"></i></li>
+          <li class="instr reveal"><span class="in-name mono">SQL</span><span class="in-role mono">QUERY LANGUAGE</span><p>Data extraction, joins and aggregation.</p><i class="wear" style="--w:78%"></i></li>
+          <li class="instr reveal"><span class="in-name mono">W&amp;B · GIT · JUPYTER · KAGGLE</span><span class="in-role mono">WORKFLOW &amp; TRACKING</span><p>Experiment tracking, version control and competition work.</p><i class="wear" style="--w:90%"></i></li>
         </ul>
-        <p class="mono instfoot reveal">ALSO LOGGED IN THE FIELD BOOK: TTA · TRANSFER LEARNING · ENSEMBLING · EDA · BEAUTIFULSOUP · MATPLOTLIB · SEABORN</p>
+        <p class="mono instfoot reveal">ALSO IN USE: TTA · TRANSFER LEARNING · ENSEMBLING · EDA · BEAUTIFULSOUP · MATPLOTLIB · SEABORN</p>
       </div>
     </section>
 
-    <!-- ══════════ VII · SURVEY OFFICE (contact) ══════════ -->
-    <section class="wrap sect office" id="office" aria-labelledby="h-office">
-      <h2 class="sechead reveal" id="h-office"><span class="mono secno">VII.</span> SURVEY OFFICE</h2>
-      <p class="officenote reveal">The field team accepts correspondence, commissions and competition invitations. Office hours are irregular; replies are not.</p>
+    <!-- ══════════ VII · CONTACT ══════════ -->
+    <section class="wrap sect office" id="office" data-section="contact" aria-labelledby="h-office">
+      <h2 class="sechead reveal" id="h-office"><span class="mono secno">VII.</span> CONTACT</h2>
+      <p class="officenote reveal">Open to internships, research collaborations and competition teams.</p>
       <a class="biglink reveal" href="mailto:root.saidul@gmail.com">
         <span class="bl-main">root.saidul@gmail.com</span>
-        <span class="bl-sub mono">WRITE TO THE OFFICE →</span>
+        <span class="bl-sub mono">SEND EMAIL →</span>
       </a>
       <div class="offrow mono reveal">
         <a href="https://github.com/ik0zy" rel="noopener">GITHUB ↗</a>
@@ -293,8 +297,8 @@
     <div class="colo-rule" aria-hidden="true"></div>
     <div class="coloflex">
       <p class="mono">© <span id="yr">2026</span> MOHAMMAD SAIDUL ISLAM</p>
-      <p class="mono colo-note">FIELD SURVEY v5 · DRAWN IN INK, RENDERED IN HTML · NO PIXELS WERE CONTOURED UNTRUTHFULLY · <a href="https://github.com/ik0zy/ik0zy.github.io" rel="noopener">SOURCE ↗</a></p>
-      <p class="mono">SHEET 5 OF 5 · DHAKA CIRCLE</p>
+      <p class="mono colo-note">DESIGNED &amp; BUILT BY MOHAMMAD SAIDUL ISLAM · <a href="https://github.com/ik0zy/ik0zy.github.io" rel="noopener">SOURCE ↗</a></p>
+      <p class="mono">DHAKA, BANGLADESH</p>
     </div>
   </footer>
 

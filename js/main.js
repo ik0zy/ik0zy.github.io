@@ -1,4 +1,4 @@
-/* FIELD SURVEY v5 — graticule, markers, detail card, reveals */
+/* Portfolio v5 — career map, markers, detail card, status bar, reveals */
 (function () {
   "use strict";
 
@@ -8,6 +8,39 @@
 
   /* ── ?static — render fully revealed (debug/QA) ── */
   if (location.search.indexOf("static") !== -1) document.documentElement.classList.add("static");
+
+  /* ── status bar: scroll progress + live section ── */
+  var sbBlocks = document.getElementById("sbBlocks");
+  var sbPct = document.getElementById("sbPct");
+  var sbSection = document.getElementById("sbSection");
+  var BLOCKS = 14;
+
+  function updateProgress() {
+    var h = document.documentElement;
+    var max = h.scrollHeight - h.clientHeight;
+    var p = max > 0 ? Math.min(1, (h.scrollTop || document.body.scrollTop) / max) : 0;
+    var filled = Math.round(p * BLOCKS);
+    if (sbBlocks) {
+      var s = "";
+      for (var i = 0; i < BLOCKS; i++) s += i < filled ? "█" : "░";
+      sbBlocks.textContent = s;
+    }
+    if (sbPct) sbPct.textContent = Math.round(p * 100) + "%";
+  }
+  window.addEventListener("scroll", updateProgress, { passive: true });
+  window.addEventListener("resize", updateProgress);
+  updateProgress();
+
+  (function trackSection() {
+    var zones = document.querySelectorAll("[data-section]");
+    if (!("IntersectionObserver" in window) || !zones.length || !sbSection) return;
+    var sio = new IntersectionObserver(function (entries) {
+      entries.forEach(function (e) {
+        if (e.isIntersecting) sbSection.textContent = e.target.getAttribute("data-section");
+      });
+    }, { rootMargin: "-35% 0px -55% 0px" });
+    zones.forEach(function (z) { sio.observe(z); });
+  })();
 
   /* ── scroll reveals ── */
   var revealEls = document.querySelectorAll(".reveal");
@@ -22,57 +55,57 @@
     revealEls.forEach(function (el) { el.classList.add("in"); });
   }
 
-  /* ── survey data (all facts from the résumé) ── */
+  /* ── marker data (all facts from the résumé) ── */
   var MARKERS = [
     {
       n: 1, x: 905, y: 300,
-      ref: "GRID REF · C-3 · ELEV. 97.4 PCT",
+      ref: "MARKER 01 · RANK 40 / 1,564 · TOP 3%",
       title: "Kaggle Competitions Expert",
-      kind: "SUMMIT — RecodAI: LUC Scientific Image Forgery Detection",
+      kind: "COMPETITION — RecodAI: LUC Scientific Image Forgery Detection",
       body: "40th of 1,564 teams worldwide — top 3% — using transfer learning, ensembling and test-time augmentation.",
-      fact: "THE ONLY MARKER ON THIS PLATE VISIBLE FROM ORBIT."
+      fact: "EXPERT TIER AWARDED WHEN THE LEADERBOARD FROZE."
     },
     {
       n: 2, x: 620, y: 415,
-      ref: "GRID REF · B-3 · TRIBUTARY CONFLUENCE",
+      ref: "MARKER 02 · IEEE XPLORE",
       title: "IEEE ICCIT 2025 Publication",
-      kind: "WATERCOURSE SOURCE — BnSFD",
+      kind: "PUBLICATION — BnSFD",
       body: "BnSFD: YOLOv12-Based Detection of Bangladeshi Street Foods for Cultural Heritage. Real-time detection, indexed on IEEE Xplore.",
-      fact: "HERITAGE, MEASURED IN MEAN AVERAGE PRECISION.",
+      fact: "PEER-REVIEWED AND PUBLICLY ACCESSIBLE.",
       link: { href: "https://ieeexplore.ieee.org/document/11490261", text: "Read on IEEE Xplore ↗" }
     },
     {
       n: 3, x: 430, y: 250,
-      ref: "GRID REF · B-2 · TWIN SUMMITS",
+      ref: "MARKER 03 · TWO FIRST PLACES",
       title: "Breakthrough I & II — 1st Place × 2",
-      kind: "DOUBLE PEAK — UIU Intra-Kaggle Series",
+      kind: "AWARD — UIU Intra-Kaggle Series",
       body: "Customer Decode Challenge, then Good Food, Good Gut!. Two consecutive first places built on EDA, feature engineering and ensemble models.",
-      fact: "HE NOW RUNS THE SERIES HE USED TO WIN."
+      fact: "39 TEAMS AHEAD OF NOBODY — 1,524 BEHIND, TWICE OVER."
     },
     {
       n: 4, x: 300, y: 560,
-      ref: "GRID REF · A-3 · STANDING STRUCTURE",
+      ref: "MARKER 04 · OPEN SOURCE",
       title: "UIU-Calendar",
-      kind: "MONUMENT — Open-source application, 2024–present",
+      kind: "PROJECT — Open-source application, 2024–present",
       body: "Scrapes the university's academic-calendar PDF into clean CSVs that import directly into Google Calendar. Built for every student on campus.",
-      fact: "LOAD-BEARING FOR AN ENTIRE UNIVERSITY'S EXAM SCHEDULE.",
-      link: { href: "https://github.com/ik0zy/UIU-Calendar", text: "Visit the site of works ↗" }
+      fact: "USED ACROSS CAMPUS EVERY TRIMESTER.",
+      link: { href: "https://github.com/ik0zy/UIU-Calendar", text: "View project ↗" }
     },
     {
       n: 5, x: 760, y: 590,
-      ref: "GRID REF · C-4 · SURVEY OFFICE ANNEX",
+      ref: "MARKER 05 · LEADERSHIP",
       title: "Co-Head of Competitions",
-      kind: "STATION — UIU Data Science Club, 2026–present",
+      kind: "LEADERSHIP — UIU Data Science Club, 2026–present",
       body: "Leads planning and execution of the club's Kaggle competitions, including the Breakthrough series.",
-      fact: "FROM COMPETITOR TO CARTOGRAPHER OF THE ARENA."
+      fact: "PROBLEM SELECTION · EVALUATION · OPERATIONS."
     },
     {
       n: 6, x: 170, y: 380,
-      ref: "GRID REF · A-2 · BASE CAMP",
+      ref: "MARKER 06 · EDUCATION",
       title: "BSc Data Science, UIU",
-      kind: "TRIANGULATION POINT — 09/2023 to present",
-      body: "United International University, Dhaka. The formal datum against which everything else on this plate is measured.",
-      fact: "PERFECT 5.00 GPAs AT BOTH PRIOR STATIONS (SSC & HSC)."
+      kind: "EDUCATION — 09/2023 to present",
+      body: "United International University, Dhaka.",
+      fact: "PERFECT 5.00 GPAs AT BOTH PRIOR SCHOOLS (SSC & HSC)."
     }
   ];
 
@@ -114,7 +147,7 @@
     card.hidden = true;
     if (activeBtn) activeBtn.classList.remove("active");
     activeBtn = null;
-    if (status) status.textContent = "SELECT A MARKER TO BEGIN";
+    if (status) status.textContent = "SELECT A MARKER FOR DETAILS";
   }
 
   function openMarker(m, btn) {
