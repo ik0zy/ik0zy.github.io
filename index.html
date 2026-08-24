@@ -124,16 +124,24 @@
           <span class="pk-elev mono">ELEV. 40 / 1564</span>
         </header>
         <p class="pk-desc">RecodAI: LUC Scientific Image Forgery Detection. 40th of 1,564 teams — top 3% worldwide — with transfer learning, ensembling and test-time augmentation. Expert tier granted when the leaderboard froze.</p>
-        <div class="elevprofile" role="img" aria-label="Elevation profile: percentile position among 1,564 teams">
-          <svg viewBox="0 0 600 90" preserveAspectRatio="none" aria-hidden="true">
-            <polyline class="ep-fill" points="0,88 600,88 600,10 0,10" style="display:none"/>
-            <line x1="0" y1="88" x2="600" y2="88" class="ep-base"/>
-            <line x1="0" y1="10" x2="600" y2="10" class="ep-grid"/>
-            <rect class="ep-you" x="573" y="10" width="27" height="78"/>
-            <text class="ep-lab" x="586" y="82">YOU</text>
-            <text class="ep-lab" x="300" y="82">THE OTHER 1,524</text>
+        <div class="elevprofile" role="img" aria-label="Elevation profile: rank 40 of 1,564 teams, in the top 3 percent">
+          <svg viewBox="0 0 600 130" aria-hidden="true">
+            <!-- crowd: the field thins as ranks improve (left = better) -->
+            <path class="ep-crowd" d="M0,118 L15,44 C22,58 40,66 80,74 C160,90 300,102 440,110 C500,114 560,116 600,118 Z"/>
+            <!-- top-3% threshold (rank ≈47) -->
+            <line class="ep-thresh" x1="47" y1="14" x2="47" y2="118"/>
+            <text class="ep-threshlab" x="53" y="24">TOP 3%</text>
+            <!-- YOU marker at rank 40 -->
+            <line class="ep-youline" x1="15" y1="30" x2="15" y2="118"/>
+            <circle class="ep-youtri" cx="15" cy="26" r="5"/>
+            <text class="ep-you" x="15" y="12">YOU · 40</text>
+            <!-- baseline + axis -->
+            <line x1="0" y1="118" x2="600" y2="118" class="ep-base"/>
+            <text class="ep-axis" x="4" y="128">RANK 1</text>
+            <text class="ep-axis" x="300" y="128">THE FIELD · 1,564 TEAMS</text>
+            <text class="ep-axis" x="596" y="112">RANK 1,564</text>
           </svg>
-          <p class="mono ep-caption">97.4TH PERCENTILE — RECODAI · LUC SCIENTIFIC IMAGE FORGERY DETECTION</p>
+          <p class="mono ep-caption">ELEVATION PROFILE — SUMMIT AT 40TH OF 1,564 · 97.4TH PERCENTILE</p>
         </div>
       </article>
 

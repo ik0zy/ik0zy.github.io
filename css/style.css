@@ -301,12 +301,18 @@ a { color: inherit; }
 .pk-desc { margin-top: 12px; color: var(--ink-soft); max-width: 66ch; }
 
 .elevprofile { margin-top: 20px; }
-.elevprofile svg { display: block; width: 100%; height: 90px; }
+.elevprofile svg { display: block; width: 100%; height: auto; }
 .ep-base { stroke: var(--ink); stroke-width: 2; }
-.ep-grid { stroke: var(--rule); stroke-dasharray: 4 4; }
-.ep-you { fill: var(--terra); }
-.ep-lab { font-family: var(--mono); font-size: 11px; fill: var(--ink-soft); text-anchor: middle; }
-.ep-lab:last-of-type { fill: #f3ecdc00; }
+.ep-crowd { fill: #22303e1f; stroke: #22303e55; stroke-width: 1; }
+.ep-thresh { stroke: var(--terra); stroke-width: 1.4; stroke-dasharray: 5 4; }
+.ep-threshlab { font-family: var(--mono); font-size: 10px; fill: var(--terra); letter-spacing: .12em; }
+.ep-youline { stroke: var(--ink); stroke-width: 1.6; }
+.ep-youtri { fill: var(--ink); }
+.ep-you { font-family: var(--mono); font-size: 11px; font-weight: 600; fill: var(--ink); text-anchor: start; letter-spacing: .1em; }
+.ep-axis { font-family: var(--mono); font-size: 9.5px; fill: var(--ink-soft); letter-spacing: .1em; }
+.ep-axis:nth-of-type(1) { text-anchor: start; }
+.ep-axis:nth-of-type(2) { text-anchor: middle; }
+.ep-axis:nth-of-type(3) { text-anchor: end; }
 .ep-caption { margin-top: 8px; font-size: 10.5px; color: var(--terra); letter-spacing: .12em; }
 
 .peaktwins { display: grid; grid-template-columns: 1fr 1fr; gap: 26px; margin-top: 26px; }
