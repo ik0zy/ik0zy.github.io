@@ -314,9 +314,6 @@ a { color: inherit; }
 .ep-summit { fill: var(--ink); }
 .ep-you { font-family: var(--mono); font-size: 11px; font-weight: 600; fill: var(--ink); letter-spacing: .08em; }
 .ep-axis { font-family: var(--mono); font-size: 9.5px; fill: var(--ink-soft); letter-spacing: .1em; }
-.ep-axis:nth-of-type(1) { text-anchor: start; }
-.ep-axis:nth-of-type(2) { text-anchor: middle; }
-.ep-axis:nth-of-type(3) { text-anchor: end; }
 .ep-caption { margin-top: 8px; font-size: 10.5px; color: var(--terra); letter-spacing: .12em; }
 
 .peaktwins { display: grid; grid-template-columns: 1fr 1fr; gap: 26px; margin-top: 26px; }
