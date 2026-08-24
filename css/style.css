@@ -314,6 +314,7 @@ a { color: inherit; }
 .ep-filllab { font-family: var(--mono); font-size: 9.5px; fill: #8a4326; letter-spacing: .12em; text-anchor: middle; }
 .ep-tailab { font-family: var(--mono); font-size: 9.5px; fill: var(--ink-soft); letter-spacing: .12em; text-anchor: middle; }
 .ep-tailleader { stroke: #4a5a6899; stroke-width: 1; }
+.ep-base { stroke: var(--ink); stroke-width: 2; }
 .ep-axis { font-family: var(--mono); font-size: 9.5px; fill: var(--ink-soft); letter-spacing: .1em; }
 .ep-caption { margin-top: 8px; font-size: 10.5px; color: var(--terra); letter-spacing: .12em; }
 
