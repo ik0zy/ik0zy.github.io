@@ -124,19 +124,29 @@
           <span class="pk-elev mono">ELEV. 40 / 1564</span>
         </header>
         <p class="pk-desc">RecodAI: LUC Scientific Image Forgery Detection. 40th of 1,564 teams — top 3% worldwide — with transfer learning, ensembling and test-time augmentation. Expert tier granted when the leaderboard froze.</p>
-        <div class="elevprofile" role="img" aria-label="Magnified view of the top 3 percent: 47 ticks, one per team, rank 1 on the left through rank 47 on the right. Rank 40 is highlighted — 39 teams finished ahead of him, 1,524 behind.">
-          <svg viewBox="0 0 600 130" aria-hidden="true">
-            <text class="ep-headlab" x="8" y="20">THE TOP 3% — MAGNIFIED · 47 TEAMS</text>
-            <!-- the elite strip: one tick per team, rank 1 (best) to rank 47 (cutoff) -->
-            <rect class="ep-band" x="8" y="40" width="584" height="36"/>
-            <path class="ep-ticks" d="M8,44 L8,72 M20.7,44 L20.7,72 M33.4,44 L33.4,72 M46.1,44 L46.1,72 M58.8,44 L58.8,72 M71.5,44 L71.5,72 M84.2,44 L84.2,72 M96.9,44 L96.9,72 M109.6,44 L109.6,72 M122.3,44 L122.3,72 M135,44 L135,72 M147.7,44 L147.7,72 M160.3,44 L160.3,72 M173,44 L173,72 M185.7,44 L185.7,72 M198.4,44 L198.4,72 M211.1,44 L211.1,72 M223.8,44 L223.8,72 M236.5,44 L236.5,72 M249.2,44 L249.2,72 M261.9,44 L261.9,72 M274.6,44 L274.6,72 M287.3,44 L287.3,72 M300,44 L300,72 M312.7,44 L312.7,72 M325.4,44 L325.4,72 M338.1,44 L338.1,72 M350.8,44 L350.8,72 M363.5,44 L363.5,72 M376.2,44 L376.2,72 M388.9,44 L388.9,72 M401.6,44 L401.6,72 M414.3,44 L414.3,72 M427,44 L427,72 M439.7,44 L439.7,72 M452.3,44 L452.3,72 M465,44 L465,72 M477.7,44 L477.7,72 M490.4,44 L490.4,72 M515.8,44 L515.8,72 M528.5,44 L528.5,72 M541.2,44 L541.2,72 M553.9,44 L553.9,72 M566.6,44 L566.6,72 M579.3,44 L579.3,72 M592,44 L592,72"/>
-            <!-- rank 40 -->
-            <line class="ep-youtick" x1="503.1" y1="34" x2="503.1" y2="82"/>
-            <text class="ep-you" x="503.1" y="26" text-anchor="middle">YOU — 40TH</text>
-            <text class="ep-rangelab" x="8" y="98">RANK 1 — BEST OF THE ELITE</text>
-            <text class="ep-rangelab" x="592" y="98" text-anchor="end">RANK 47 — TOP-3% CUTOFF</text>
+        <div class="elevprofile" role="img" aria-label="Normal distribution of the 1,564-team field. The shaded area under the bell curve — 97.4 percent of it — is the 1,524 teams he beat. The unshaded right tail holds the 39 teams ahead. His marker sits at the 97.4th percentile.">
+          <svg viewBox="0 0 600 140" aria-hidden="true">
+            <text class="ep-headlab" x="8" y="20">THE FIELD — 1,564 TEAMS · NORMALLY DISTRIBUTED BY RANK</text>
+            <text class="ep-you" x="592" y="20" text-anchor="end">YOU — 40TH OF 1,564</text>
+            <!-- area under the curve up to the 97.4th percentile: everyone behind him -->
+            <path class="ep-fillarea" d="M0,118 L0,117.4 L6,117.2 L12,117.1 L18,116.9 L24,116.6 L30,116.4 L36,116.1 L42,115.7 L48,115.3 L54,114.8 L60,114.2 L66,113.6 L72,112.8 L78,112.0 L84,111.1 L90,110.0 L96,108.8 L102,107.5 L108,106.1 L114,104.5 L120,102.7 L126,100.8 L132,98.7 L138,96.5 L144,94.1 L150,91.6 L156,88.8 L162,86.0 L168,83.0 L174,79.8 L180,76.6 L186,73.2 L192,69.8 L198,66.3 L204,62.8 L210,59.3 L216,55.8 L222,52.3 L228,49.0 L234,45.7 L240,42.6 L246,39.7 L252,37.0 L258,34.6 L264,32.4 L270,30.5 L276,28.9 L282,27.6 L288,26.7 L294,26.2 L300,26.0 L306,26.2 L312,26.7 L318,27.6 L324,28.9 L330,30.5 L336,32.4 L342,34.6 L348,37.0 L354,39.7 L360,42.6 L366,45.7 L372,49.0 L378,52.3 L384,55.8 L390,59.3 L396,62.8 L402,66.3 L408,69.8 L414,73.2 L420,76.6 L426,79.8 L432,83.0 L438,86.0 L444,88.8 L450,91.6 L456,94.1 L462,96.5 L468,98.7 L474,100.8 L480,102.7 L484.6,104.1 L484.6,118 Z"/>
+            <!-- the bell curve -->
+            <path class="ep-curve" d="M0,117.4 L6,117.2 L12,117.1 L18,116.9 L24,116.6 L30,116.4 L36,116.1 L42,115.7 L48,115.3 L54,114.8 L60,114.2 L66,113.6 L72,112.8 L78,112.0 L84,111.1 L90,110.0 L96,108.8 L102,107.5 L108,106.1 L114,104.5 L120,102.7 L126,100.8 L132,98.7 L138,96.5 L144,94.1 L150,91.6 L156,88.8 L162,86.0 L168,83.0 L174,79.8 L180,76.6 L186,73.2 L192,69.8 L198,66.3 L204,62.8 L210,59.3 L216,55.8 L222,52.3 L228,49.0 L234,45.7 L240,42.6 L246,39.7 L252,37.0 L258,34.6 L264,32.4 L270,30.5 L276,28.9 L282,27.6 L288,26.7 L294,26.2 L300,26.0 L306,26.2 L312,26.7 L318,27.6 L324,28.9 L330,30.5 L336,32.4 L342,34.6 L348,37.0 L354,39.7 L360,42.6 L366,45.7 L372,49.0 L378,52.3 L384,55.8 L390,59.3 L396,62.8 L402,66.3 L408,69.8 L414,73.2 L420,76.6 L426,79.8 L432,83.0 L438,86.0 L444,88.8 L450,91.6 L456,94.1 L462,96.5 L468,98.7 L474,100.8 L480,102.7 L484.6,104.1 L490,105.0 L496,106.2 L502,107.4 L508,108.7 L514,110.0 L520,111.2 L526,112.3 L532,113.3 L538,114.2 L544,115.0 L550,115.7 L556,116.3 L562,116.8 L568,117.2 L574,117.5 L580,117.7 L586,117.9 L592,118.0 L598,118.1"/>
+            <!-- median -->
+            <line class="ep-median" x1="300" y1="30" x2="300" y2="118"/>
+            <!-- YOU at the 97.4th percentile -->
+            <line class="ep-youline" x1="484.6" y1="118" x2="484.6" y2="104.1"/>
+            <circle class="ep-youdot" cx="484.6" cy="104.1" r="4.5"/>
+            <text class="ep-filllab" x="205" y="110">THE 1,524 BEHIND HIM</text>
+            <text class="ep-tailab" x="552" y="99">39 AHEAD</text>
+            <line class="ep-tailleader" x1="552" y1="103" x2="552" y2="113"/>
+            <!-- baseline + axis -->
+            <line x1="0" y1="118" x2="600" y2="118" class="ep-base"/>
+            <text class="ep-axis" x="4" y="133" text-anchor="start">RANK 1,564</text>
+            <text class="ep-axis" x="300" y="133" text-anchor="middle">THE MEDIAN TEAM</text>
+            <text class="ep-axis" x="596" y="133" text-anchor="end">RANK 1</text>
           </svg>
-          <p class="mono ep-caption">MAGNIFIED VIEW — 39 TEAMS AHEAD OF HIM · 1,524 BEHIND · 97.4TH PERCENTILE</p>
+          <p class="mono ep-caption">PERCENTILE — 97.4TH OF THE FIELD · SHADED AREA IS EVERY TEAM HE BEAT</p>
         </div>
       </article>
 
