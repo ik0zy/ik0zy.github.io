@@ -124,36 +124,26 @@
           <span class="pk-elev mono">ELEV. 40 / 1564</span>
         </header>
         <p class="pk-desc">RecodAI: LUC Scientific Image Forgery Detection. 40th of 1,564 teams — top 3% worldwide — with transfer learning, ensembling and test-time augmentation. Expert tier granted when the leaderboard froze.</p>
-        <div class="elevprofile" role="img" aria-label="Elevation profile: a lone summit piercing the top-3 percent cutoff line, with 1,524 teams on the lowland below — rank 40 of 1,564 teams, 97.4th percentile">
+        <div class="elevprofile" role="img" aria-label="Distribution of 1,564 teams as a bell curve with the top 3 percent tail shaded — rank 40 sits inside that tail, 97.4th percentile">
           <svg viewBox="0 0 600 130" aria-hidden="true">
-            <defs>
-              <pattern id="ephatch" width="5" height="5" patternTransform="rotate(45)" patternUnits="userSpaceOnUse">
-                <line x1="0" y1="0" x2="0" y2="5" stroke="#22303e" stroke-opacity="0.045" stroke-width="1"/>
-              </pattern>
-            </defs>
-            <!-- the thin-air band: everything above the top-3% contour -->
-            <rect class="ep-thinair" x="8" y="10" width="584" height="28" fill="url(#ephatch)"/>
-            <!-- the field: flat lowland stretching to the horizon -->
-            <path class="ep-field" d="M0,112 C50,109 90,114 150,111 C220,108 280,113 350,110 C420,107 500,112 550,109 L600,111 L600,118 L0,118 Z"/>
-            <!-- everyone else: gentle hills, all safely under the line -->
-            <path class="ep-hills" d="M150,118 Q185,88 220,118 Z"/>
-            <path class="ep-hills" d="M260,118 Q300,96 340,118 Z"/>
-            <path class="ep-hills" d="M380,118 Q420,90 460,118 Z"/>
-            <text class="ep-belowlab" x="300" y="80">1,524 TEAMS BELOW THE LINE</text>
-            <!-- top-3% cutoff contour -->
-            <line class="ep-cut" x1="8" y1="38" x2="592" y2="38"/>
-            <text class="ep-cutlab" x="592" y="31">TOP 3% CUTOFF · RANK ≈ 47</text>
-            <!-- his summit: the only thing that pierces it -->
-            <path class="ep-peak" d="M18,118 L56,14 L94,118 Z"/>
-            <circle class="ep-summit" cx="56" cy="14" r="4.5"/>
-            <text class="ep-you" x="68" y="13">YOU — 40TH OF 1,564</text>
+            <!-- the field: a normal distribution of everyone who competed -->
+            <path class="ep-bell" d="M30,116.9 L45,116.2 L60,115.1 L75,113.6 L90,111.4 L105,108.4 L120,104.5 L135,99.4 L150,93.1 L165,85.5 L180,76.9 L195,67.4 L210,57.3 L225,47.3 L240,37.9 L255,29.8 L270,23.4 L285,19.4 L300,18 L315,19.4 L330,23.4 L345,29.8 L360,37.9 L375,47.3 L390,57.3 L405,67.4 L420,76.9 L435,85.5 L450,93.1 L465,99.4 L480,104.5 L495,108.4 L510,111.4 L525,113.6 L540,115.1 L555,116.2 L570,116.9"/>
+            <!-- the top-3% tail, shaded -->
+            <path class="ep-tail" d="M470,118 L470,101.2 L480,104.5 L495,108.4 L510,111.4 L525,113.6 L540,115.1 L555,116.2 L570,116.9 L570,118 Z"/>
+            <line class="ep-cut" x1="470" y1="28" x2="470" y2="118"/>
+            <text class="ep-taillab" x="524" y="96">TOP 3%</text>
+            <line class="ep-tailline" x1="524" y1="102" x2="524" y2="112"/>
+            <!-- YOU: rank 40, inside the shaded tail -->
+            <line class="ep-youline" x1="505" y1="30" x2="505" y2="110"/>
+            <circle class="ep-youdot" cx="505" cy="110" r="4"/>
+            <text class="ep-you" x="592" y="20" text-anchor="end">YOU — 40TH OF 1,564 · <tspan class="ep-youpct">TOP 3%</tspan></text>
             <!-- baseline + axis -->
             <line x1="0" y1="118" x2="600" y2="118" class="ep-base"/>
-            <text class="ep-axis" x="4" y="129" text-anchor="start">RANK 1</text>
+            <text class="ep-axis" x="4" y="129" text-anchor="start">RANK 1,564</text>
             <text class="ep-axis" x="300" y="129" text-anchor="middle">THE FIELD · 1,564 TEAMS</text>
-            <text class="ep-axis" x="596" y="129" text-anchor="end">RANK 1,564</text>
+            <text class="ep-axis" x="596" y="129" text-anchor="end">RANK 1</text>
           </svg>
-          <p class="mono ep-caption">ELEVATION PROFILE — ONE SUMMIT PIERCES THE TOP-3% CONTOUR · 97.4TH PERCENTILE</p>
+          <p class="mono ep-caption">DISTRIBUTION OF THE FIELD — THE SHADED TAIL IS THE TOP 3% · HE SITS AT THE 97.4TH PERCENTILE</p>
         </div>
       </article>
 
