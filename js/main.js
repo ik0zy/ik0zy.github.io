@@ -6,6 +6,9 @@
   var yr = document.getElementById("yr");
   if (yr) yr.textContent = new Date().getFullYear();
 
+  /* ── ?static — render fully revealed (debug/QA) ── */
+  if (location.search.indexOf("static") !== -1) document.documentElement.classList.add("static");
+
   /* ── scroll reveals ── */
   var revealEls = document.querySelectorAll(".reveal");
   if ("IntersectionObserver" in window) {

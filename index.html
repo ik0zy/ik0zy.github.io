@@ -124,24 +124,36 @@
           <span class="pk-elev mono">ELEV. 40 / 1564</span>
         </header>
         <p class="pk-desc">RecodAI: LUC Scientific Image Forgery Detection. 40th of 1,564 teams — top 3% worldwide — with transfer learning, ensembling and test-time augmentation. Expert tier granted when the leaderboard froze.</p>
-        <div class="elevprofile" role="img" aria-label="Elevation profile: rank 40 of 1,564 teams, in the top 3 percent">
+        <div class="elevprofile" role="img" aria-label="Elevation profile: a lone summit piercing the top-3 percent cutoff line, with 1,524 teams on the lowland below — rank 40 of 1,564 teams, 97.4th percentile">
           <svg viewBox="0 0 600 130" aria-hidden="true">
-            <!-- crowd: the field thins as ranks improve (left = better) -->
-            <path class="ep-crowd" d="M0,118 L15,44 C22,58 40,66 80,74 C160,90 300,102 440,110 C500,114 560,116 600,118 Z"/>
-            <!-- top-3% threshold (rank ≈47) -->
-            <line class="ep-thresh" x1="47" y1="14" x2="47" y2="118"/>
-            <text class="ep-threshlab" x="53" y="24">TOP 3%</text>
-            <!-- YOU marker at rank 40 -->
-            <line class="ep-youline" x1="15" y1="30" x2="15" y2="118"/>
-            <circle class="ep-youtri" cx="15" cy="26" r="5"/>
-            <text class="ep-you" x="15" y="12">YOU · 40</text>
+            <defs>
+              <pattern id="ephatch" width="7" height="7" patternTransform="rotate(45)" patternUnits="userSpaceOnUse">
+                <line x1="0" y1="0" x2="0" y2="7" stroke="#22303e" stroke-opacity="0.07" stroke-width="1.2"/>
+              </pattern>
+            </defs>
+            <!-- the thin-air band: everything above the top-3% contour -->
+            <rect class="ep-thinair" x="8" y="10" width="584" height="28" fill="url(#ephatch)"/>
+            <!-- the field: flat lowland stretching to the horizon -->
+            <path class="ep-field" d="M0,112 C50,109 90,114 150,111 C220,108 280,113 350,110 C420,107 500,112 550,109 L600,111 L600,118 L0,118 Z"/>
+            <!-- everyone else: gentle hills, all safely under the line -->
+            <path class="ep-hills" d="M150,118 Q185,88 220,118 Z"/>
+            <path class="ep-hills" d="M260,118 Q300,96 340,118 Z"/>
+            <path class="ep-hills" d="M380,118 Q420,90 460,118 Z"/>
+            <text class="ep-belowlab" x="300" y="80">1,524 TEAMS BELOW THE LINE</text>
+            <!-- top-3% cutoff contour -->
+            <line class="ep-cut" x1="8" y1="38" x2="592" y2="38"/>
+            <text class="ep-cutlab" x="592" y="31">TOP 3% CUTOFF · RANK ≈ 47</text>
+            <!-- his summit: the only thing that pierces it -->
+            <path class="ep-peak" d="M18,118 L56,14 L94,118 Z"/>
+            <circle class="ep-summit" cx="56" cy="14" r="4.5"/>
+            <text class="ep-you" x="68" y="13">YOU — 40TH OF 1,564</text>
             <!-- baseline + axis -->
             <line x1="0" y1="118" x2="600" y2="118" class="ep-base"/>
-            <text class="ep-axis" x="4" y="128">RANK 1</text>
-            <text class="ep-axis" x="300" y="128">THE FIELD · 1,564 TEAMS</text>
-            <text class="ep-axis" x="596" y="112">RANK 1,564</text>
+            <text class="ep-axis" x="4" y="129">RANK 1</text>
+            <text class="ep-axis" x="300" y="129">THE FIELD · 1,564 TEAMS</text>
+            <text class="ep-axis" x="596" y="129">RANK 1,564</text>
           </svg>
-          <p class="mono ep-caption">ELEVATION PROFILE — SUMMIT AT 40TH OF 1,564 · 97.4TH PERCENTILE</p>
+          <p class="mono ep-caption">ELEVATION PROFILE — ONE SUMMIT PIERCES THE TOP-3% CONTOUR · 97.4TH PERCENTILE</p>
         </div>
       </article>
 

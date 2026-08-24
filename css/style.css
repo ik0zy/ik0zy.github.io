@@ -96,6 +96,7 @@ a { color: inherit; }
 .reveal { opacity: 0; transform: translateY(14px); transition: opacity .7s ease, transform .7s ease; }
 .reveal.in { opacity: 1; transform: none; }
 @media (prefers-reduced-motion: reduce) { .reveal { opacity: 1; transform: none; } }
+.static .reveal { opacity: 1; transform: none; transition: none; }
 
 /* ═══ TITLE BLOCK ═══════════════════════════════════════ */
 .titleblock {
@@ -303,12 +304,15 @@ a { color: inherit; }
 .elevprofile { margin-top: 20px; }
 .elevprofile svg { display: block; width: 100%; height: auto; }
 .ep-base { stroke: var(--ink); stroke-width: 2; }
-.ep-crowd { fill: #22303e1f; stroke: #22303e55; stroke-width: 1; }
-.ep-thresh { stroke: var(--terra); stroke-width: 1.4; stroke-dasharray: 5 4; }
-.ep-threshlab { font-family: var(--mono); font-size: 10px; fill: var(--terra); letter-spacing: .12em; }
-.ep-youline { stroke: var(--ink); stroke-width: 1.6; }
-.ep-youtri { fill: var(--ink); }
-.ep-you { font-family: var(--mono); font-size: 11px; font-weight: 600; fill: var(--ink); text-anchor: start; letter-spacing: .1em; }
+.ep-field { fill: #22303e14; stroke: #22303e40; stroke-width: 1; }
+.ep-hills { fill: #22303e26; stroke: #22303e55; stroke-width: 1; }
+.ep-belowlab { font-family: var(--mono); font-size: 9.5px; fill: var(--ink-soft); letter-spacing: .14em; text-anchor: middle; }
+.ep-thinair { stroke: #22303e1a; stroke-width: 1; }
+.ep-cut { stroke: var(--terra); stroke-width: 1.6; stroke-dasharray: 7 5; }
+.ep-cutlab { font-family: var(--mono); font-size: 10px; fill: var(--terra); text-anchor: end; letter-spacing: .12em; }
+.ep-peak { fill: var(--terra); stroke: var(--ink); stroke-width: 1.4; }
+.ep-summit { fill: var(--ink); }
+.ep-you { font-family: var(--mono); font-size: 11px; font-weight: 600; fill: var(--ink); letter-spacing: .08em; }
 .ep-axis { font-family: var(--mono); font-size: 9.5px; fill: var(--ink-soft); letter-spacing: .1em; }
 .ep-axis:nth-of-type(1) { text-anchor: start; }
 .ep-axis:nth-of-type(2) { text-anchor: middle; }
