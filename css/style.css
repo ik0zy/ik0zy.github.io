@@ -184,10 +184,10 @@ a { color: inherit; }
   border-top: 1px solid #000;
 }
 .sb-host { color: var(--terra); }
-.sb-sect { color: var(--ink); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.sb-sect { color: #f3ecdc; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
 .sbar .sb-right { margin-left: auto; display: flex; align-items: center; gap: 10px; white-space: nowrap; font-variant-numeric: tabular-nums; }
 .sb-meter { color: var(--terra); letter-spacing: -.02em; }
-.sb-clock { color: var(--muted); }
+.sb-clock { color: #9a917f; }
 body { padding-bottom: 46px; }
 @media (max-width: 560px) {
   .sb-host { display: none; }
