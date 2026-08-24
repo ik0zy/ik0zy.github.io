@@ -1,4 +1,4 @@
-/* Portfolio v5 — career map, markers, detail card, status bar, reveals */
+/* Portfolio v5 — career map, markers, detail card, tmux bar, ASCII name, reveals */
 (function () {
   "use strict";
 
@@ -9,37 +9,151 @@
   /* ── ?static — render fully revealed (debug/QA) ── */
   if (location.search.indexOf("static") !== -1) document.documentElement.classList.add("static");
 
-  /* ── status bar: scroll progress + live section ── */
-  var sbBlocks = document.getElementById("sbBlocks");
+  var reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+  /* ── bottom tmux bar: scroll meter, live section, clock ── */
+  var sbMeter = document.getElementById("sbMeter");
   var sbPct = document.getElementById("sbPct");
-  var sbSection = document.getElementById("sbSection");
-  var BLOCKS = 14;
+  var sbSect = document.getElementById("sbSect");
+  var sbClock = document.getElementById("sbClock");
+  var METER = 8;
 
   function updateProgress() {
     var h = document.documentElement;
     var max = h.scrollHeight - h.clientHeight;
     var p = max > 0 ? Math.min(1, (h.scrollTop || document.body.scrollTop) / max) : 0;
-    var filled = Math.round(p * BLOCKS);
-    if (sbBlocks) {
-      var s = "";
-      for (var i = 0; i < BLOCKS; i++) s += i < filled ? "█" : "░";
-      sbBlocks.textContent = s;
-    }
-    if (sbPct) sbPct.textContent = Math.round(p * 100) + "%";
+    var on = Math.round(p * METER);
+    if (sbMeter) sbMeter.textContent = "\u2593".repeat(on) + "\u2591".repeat(METER - on);
+    if (sbPct) sbPct.textContent = String(Math.round(p * 100)).padStart(2, "0") + "%";
   }
-  window.addEventListener("scroll", updateProgress, { passive: true });
+  window.addEventListener("scroll", function () {
+    if (updateProgress.t) return;
+    updateProgress.t = true;
+    requestAnimationFrame(function () { updateProgress(); updateProgress.t = false; });
+  }, { passive: true });
   window.addEventListener("resize", updateProgress);
   updateProgress();
 
   (function trackSection() {
     var zones = document.querySelectorAll("[data-section]");
-    if (!("IntersectionObserver" in window) || !zones.length || !sbSection) return;
+    if (!("IntersectionObserver" in window) || !zones.length || !sbSect) return;
     var sio = new IntersectionObserver(function (entries) {
       entries.forEach(function (e) {
-        if (e.isIntersecting) sbSection.textContent = e.target.getAttribute("data-section");
+        if (e.isIntersecting) sbSect.textContent = "\u25B8 " + e.target.getAttribute("data-section");
       });
     }, { rootMargin: "-35% 0px -55% 0px" });
     zones.forEach(function (z) { sio.observe(z); });
+  })();
+
+  (function clock() {
+    if (!sbClock) return;
+    function tick() {
+      var d = new Date();
+      sbClock.textContent = String(d.getHours()).padStart(2, "0") + ":" + String(d.getMinutes()).padStart(2, "0");
+    }
+    tick();
+    setInterval(tick, 20000);
+  })();
+
+  /* ── typed prompt ── */
+  (function typedPrompt() {
+    var t = document.getElementById("plTyped");
+    if (!t) return;
+    var s = "./portfolio";
+    if (reduced) { t.textContent = s; return; }
+    var i = 0;
+    (function step() { t.textContent = s.slice(0, ++i); if (i <= s.length) setTimeout(step, 54); })();
+  })();
+
+  /* ── ASCII name: 3 art styles × 6 palettes, click the name to re-roll ── */
+  var GLYPHS = {
+    M: ["█   █", "██ ██", "█ █ █", "█   █", "█   █"],
+    O: [" ███ ", "█   █", "█   █", "█   █", " ███ "],
+    H: ["█   █", "█   █", "█████", "█   █", "█   █"],
+    A: [" ███ ", "█   █", "█████", "█   █", "█   █"],
+    D: ["████ ", "█   █", "█   █", "█   █", "████ "],
+    S: [" ███ ", "█    ", " ███ ", "    █", "███  "],
+    I: ["███", " █ ", " █ ", " █ ", "███"],
+    U: ["█   █", "█   █", "█   █", "█   █", " ███ "],
+    L: ["█    ", "█    ", "█    ", "█    ", "█████"]
+  };
+  var ARTS = [
+    { name: "SOLID",  ch: function () { return "█"; } },
+    { name: "SHADE",  ch: function (r) { return ["█", "█", "▓", "▒", "▒"][r]; } },
+    { name: "DITHER", ch: function (r, c) { return (r + c) % 2 ? "▓" : "█"; } }
+  ];
+  var PALETTES = [
+    { name: "TERRA",  ac: "#B4552D", g: "linear-gradient(180deg,#D98B5F 0%,#B4552D 45%,#7E3A1E 100%)" },
+    { name: "INDIGO", ac: "#4A5A9A", g: "linear-gradient(180deg,#8B9BD0 0%,#4A5A9A 45%,#2E3A66 100%)" },
+    { name: "OLIVE",  ac: "#6E7C35", g: "linear-gradient(180deg,#A3B45C 0%,#6E7C35 45%,#454E1F 100%)" },
+    { name: "PLUM",   ac: "#8A4A7A", g: "linear-gradient(180deg,#B57AA8 0%,#8A4A7A 45%,#5A2E4E 100%)" },
+    { name: "TEAL",   ac: "#2E7A72", g: "linear-gradient(180deg,#5FA89E 0%,#2E7A72 45%,#1D4E48 100%)" },
+    { name: "GOLD",   ac: "#A8862A", g: "linear-gradient(180deg,#D6B258 0%,#A8862A 45%,#6E571C 100%)" }
+  ];
+
+  (function asciiName() {
+    var nb = document.getElementById("nameblock");
+    if (!nb) return;
+    var pres = [document.getElementById("art1"), document.getElementById("art2"), document.getElementById("art3")];
+    var WORDS = ["MOHAMMAD", "SAIDUL", "ISLAM"];
+
+    function renderWord(word, art) {
+      var rows = ["", "", "", "", ""];
+      for (var r = 0; r < 5; r++) {
+        var line = "";
+        for (var i = 0; i < word.length; i++) {
+          var row = GLYPHS[word[i]][r];
+          for (var c = 0; c < row.length; c++) {
+            line += row[c] === "█" ? art.ch(r, c) : " ";
+          }
+          line += " ";
+        }
+        rows[r] = line;
+      }
+      return rows.join("\n");
+    }
+
+    var cur = null, busy = false;
+    function apply(art, pal) {
+      cur = { art: art, pal: pal };
+      document.documentElement.style.setProperty("--terra", pal.ac);
+      var maxLen = 0;
+      for (var i = 0; i < WORDS.length; i++) {
+        var txt = renderWord(WORDS[i], art);
+        pres[i].textContent = txt;
+        pres[i].style.background = pal.g;
+        pres[i].style.webkitBackgroundClip = "text";
+        pres[i].style.backgroundClip = "text";
+        var rows = txt.split("\n");
+        for (var j = 0; j < rows.length; j++) if (rows[j].length > maxLen) maxLen = rows[j].length;
+      }
+      var fs = Math.max(9, Math.min(26, nb.clientWidth / (maxLen * 0.62)));
+      pres.forEach(function (el) { el.style.fontSize = fs + "px"; });
+    }
+
+    function reroll() {
+      if (busy) return;
+      var na, np;
+      do {
+        na = ARTS[(Math.random() * ARTS.length) | 0];
+        np = PALETTES[(Math.random() * PALETTES.length) | 0];
+      } while (cur && na === cur.art && np === cur.pal);
+      if (reduced) { apply(na, np); return; }
+      busy = true;
+      var n = 0;
+      var iv = setInterval(function () {
+        pres.forEach(function (el) {
+          el.textContent = el.textContent.replace(/[^\n]/g, function (ch) {
+            return ch === " " ? " " : "░▒▓█"[(Math.random() * 4) | 0];
+          });
+        });
+        if (++n >= 4) { clearInterval(iv); apply(na, np); busy = false; }
+      }, 46);
+    }
+
+    apply(ARTS[(Math.random() * ARTS.length) | 0], PALETTES[(Math.random() * PALETTES.length) | 0]);
+    nb.addEventListener("click", reroll);
+    window.addEventListener("resize", function () { if (cur) apply(cur.art, cur.pal); });
   })();
 
   /* ── scroll reveals ── */

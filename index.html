@@ -18,12 +18,8 @@
 <body>
   <a class="skip mono" href="#main">Skip to content</a>
 
-  <!-- terminal prompt + sticky status bar -->
-  <p class="promptline mono wrap" aria-hidden="true">saidul@ik0zy:~/portfolio</p>
-  <div class="statusbar mono" id="statusbar" role="status" aria-label="Reading progress">
-    <span class="sb-left">[saidul@ik0zy] ~ <span id="sbSection">intro</span></span>
-    <span class="sb-right"><span class="sb-blocks" id="sbBlocks"></span> <span id="sbPct">0%</span></span>
-  </div>
+  <!-- terminal prompt (types itself out) + sticky status bar -->
+  <p class="promptline mono wrap" aria-hidden="true"><span class="pl-host">saidul@ik0zy</span> ~ % <span id="plTyped"></span><span class="pl-cursor"></span></p>
 
   <!-- ══════════ TITLE BLOCK ══════════ -->
   <header class="titleblock wrap" id="top" data-section="intro">
@@ -33,7 +29,12 @@
     </div>
 
     <p class="tb-over mono reveal">DATA SCIENCE PORTFOLIO · DHAKA, BANGLADESH</p>
-    <h1 class="tb-title reveal">MOHAMMAD<br>SAIDUL ISLAM</h1>
+    <h1 class="sr-only">Mohammad Saidul Islam — Data Science</h1>
+    <button class="nameblock reveal" id="nameblock" type="button" aria-label="Shuffle the name artwork and site theme">
+      <pre class="nameart" id="art1"></pre>
+      <pre class="nameart" id="art2"></pre>
+      <pre class="nameart" id="art3"></pre>
+    </button>
     <p class="tb-sub reveal">Data science undergraduate at UIU — <mark>Kaggle Competitions Expert</mark>, <mark>IEEE-published</mark> researcher, and builder of tools people actually use.</p>
 
     <dl class="tbcartouche reveal" aria-label="Key facts">
@@ -130,29 +131,24 @@
           <span class="pk-elev mono">RANK 40 / 1,564</span>
         </header>
         <p class="pk-desc">RecodAI: LUC Scientific Image Forgery Detection. 40th of 1,564 teams — top 3% worldwide — with transfer learning, ensembling and test-time augmentation. Expert tier granted when the leaderboard froze.</p>
-        <div class="elevprofile" role="img" aria-label="Normal distribution of the 1,564-team field. The shaded area under the bell curve is the 1,524 teams ranked below 40th place; the unshaded right tail holds the 39 teams ahead. His marker sits at the 97.4th percentile.">
+        <div class="elevprofile" role="img" aria-label="Distribution of the 1,564-team field. The shaded tail marks the top 3 percent; the dot is rank 40, at the 97.4th percentile.">
           <svg viewBox="0 0 600 140" aria-hidden="true">
-            <text class="ep-headlab" x="8" y="20">THE FIELD — 1,564 TEAMS · NORMALLY DISTRIBUTED BY RANK</text>
-            <text class="ep-you" x="592" y="20" text-anchor="end">RANK 40 OF 1,564</text>
             <!-- area under the curve up to the 97.4th percentile: everyone ranked below -->
             <path class="ep-fillarea" d="M0,118 L0,117.4 L6,117.2 L12,117.1 L18,116.9 L24,116.6 L30,116.4 L36,116.1 L42,115.7 L48,115.3 L54,114.8 L60,114.2 L66,113.6 L72,112.8 L78,112.0 L84,111.1 L90,110.0 L96,108.8 L102,107.5 L108,106.1 L114,104.5 L120,102.7 L126,100.8 L132,98.7 L138,96.5 L144,94.1 L150,91.6 L156,88.8 L162,86.0 L168,83.0 L174,79.8 L180,76.6 L186,73.2 L192,69.8 L198,66.3 L204,62.8 L210,59.3 L216,55.8 L222,52.3 L228,49.0 L234,45.7 L240,42.6 L246,39.7 L252,37.0 L258,34.6 L264,32.4 L270,30.5 L276,28.9 L282,27.6 L288,26.7 L294,26.2 L300,26.0 L306,26.2 L312,26.7 L318,27.6 L324,28.9 L330,30.5 L336,32.4 L342,34.6 L348,37.0 L354,39.7 L360,42.6 L366,45.7 L372,49.0 L378,52.3 L384,55.8 L390,59.3 L396,62.8 L402,66.3 L408,69.8 L414,73.2 L420,76.6 L426,79.8 L432,83.0 L438,86.0 L444,88.8 L450,91.6 L456,94.1 L462,96.5 L468,98.7 L474,100.8 L480,102.7 L484.6,104.1 L484.6,118 Z"/>
+            <!-- the top-3% tail, shaded deeper -->
+            <path class="ep-tailshade" d="M470,118 L470,99.4 L474,100.8 L480,102.7 L484.6,104.1 L490,105 L496,106.2 L502,107.4 L508,108.7 L514,110 L520,111.2 L526,112.3 L532,113.3 L538,114.2 L544,115 L550,115.7 L556,116.3 L562,116.8 L568,117.2 L574,117.5 L580,117.7 L586,117.9 L592,118 L598,118.1 L600,118.1 L600,118 Z"/>
             <!-- the bell curve -->
-            <path class="ep-curve" d="M0,117.4 L6,117.2 L12,117.1 L18,116.9 L24,116.6 L30,116.4 L36,116.1 L42,115.7 L48,115.3 L54,114.8 L60,114.2 L66,113.6 L72,112.8 L78,112.0 L84,111.1 L90,110.0 L96,108.8 L102,107.5 L108,106.1 L114,104.5 L120,102.7 L126,100.8 L132,98.7 L138,96.5 L144,94.1 L150,91.6 L156,88.8 L162,86.0 L168,83.0 L174,79.8 L180,76.6 L186,73.2 L192,69.8 L198,66.3 L204,62.8 L210,59.3 L216,55.8 L222,52.3 L228,49.0 L234,45.7 L240,42.6 L246,39.7 L252,37.0 L258,34.6 L264,32.4 L270,30.5 L276,28.9 L282,27.6 L288,26.7 L294,26.2 L300,26.0 L306,26.2 L312,26.7 L318,27.6 L324,28.9 L330,30.5 L336,32.4 L342,34.6 L348,37.0 L354,39.7 L360,42.6 L366,45.7 L372,49.0 L378,52.3 L384,55.8 L390,59.3 L396,62.8 L402,66.3 L408,69.8 L414,73.2 L420,76.6 L426,79.8 L432,83.0 L438,86.0 L444,88.8 L450,91.6 L456,94.1 L462,96.5 L468,98.7 L474,100.8 L480,102.7 L484.6,104.1 L490,105.0 L496,106.2 L502,107.4 L508,108.7 L514,110.0 L520,111.2 L526,112.3 L532,113.3 L538,114.2 L544,115.0 L550,115.7 L556,116.3 L562,116.8 L568,117.2 L574,117.5 L580,117.7 L586,117.9 L592,118.0 L598,118.1"/>
-            <!-- median -->
-            <line class="ep-median" x1="300" y1="30" x2="300" y2="118"/>
-            <!-- YOU at the 97.4th percentile -->
-            <line class="ep-youline" x1="484.6" y1="118" x2="484.6" y2="104.1"/>
+            <path class="ep-curve" d="M0,117.4 L6,117.2 L12,117.1 L18,116.9 L24,116.6 L30,116.4 L36,116.1 L42,115.7 L48,115.3 L54,114.8 L60,114.2 L66,113.6 L72,112.8 L78,112.0 L84,111.1 L90,110.0 L96,108.8 L102,107.5 L108,106.1 L114,104.5 L120,102.7 L126,100.8 L132,98.7 L138,96.5 L144,94.1 L150,91.6 L156,88.8 L162,86.0 L168,83.0 L174,79.8 L180,76.6 L186,73.2 L192,69.8 L198,66.3 L204,62.8 L210,59.3 L216,55.8 L222,52.3 L228,49.0 L234,45.7 L240,42.6 L246,39.7 L252,37.0 L258,34.6 L264,32.4 L270,30.5 L276,28.9 L282,27.6 L288,26.7 L294,26.2 L300,26.0 L306,26.2 L312,26.7 L318,27.6 L324,28.9 L330,30.5 L336,32.4 L342,34.6 L348,37.0 L354,39.7 L360,42.6 L366,45.7 L372,49.0 L378,52.3 L384,55.8 L390,59.3 L396,62.8 L402,66.3 L408,69.8 L414,73.2 L420,76.6 L426,79.8 L432,83.0 L438,86.0 L444,88.8 L450,91.6 L456,94.1 L462,96.5 L468,98.7 L474,100.8 L480,102.7 L484.6,104.1 L490,105 L496,106.2 L502,107.4 L508,108.7 L514,110 L520,111.2 L526,112.3 L532,113.3 L538,114.2 L544,115 L550,115.7 L556,116.3 L562,116.8 L568,117.2 L574,117.5 L580,117.7 L586,117.9 L592,118 L598,118.1"/>
+            <!-- top-3% cutoff -->
+            <line class="ep-cut" x1="470" y1="26" x2="470" y2="118"/>
+            <!-- rank 40 at the 97.4th percentile -->
             <circle class="ep-youdot" cx="484.6" cy="104.1" r="4.5"/>
-            <text class="ep-filllab" x="205" y="110">1,524 TEAMS RANKED BELOW</text>
-            <text class="ep-tailab" x="552" y="99">39 TEAMS AHEAD</text>
-            <line class="ep-tailleader" x1="552" y1="103" x2="552" y2="113"/>
-            <!-- baseline + axis -->
+            <text class="ep-taillab" x="535" y="92" text-anchor="middle">TOP 3%</text>
+            <!-- baseline + axis ends -->
             <line x1="0" y1="118" x2="600" y2="118" class="ep-base"/>
             <text class="ep-axis" x="4" y="133" text-anchor="start">RANK 1,564</text>
-            <text class="ep-axis" x="300" y="133" text-anchor="middle">FIELD MEDIAN</text>
             <text class="ep-axis" x="596" y="133" text-anchor="end">RANK 1</text>
           </svg>
-          <p class="mono ep-caption">97.4TH PERCENTILE — SHADED AREA = TEAMS RANKED BELOW 40TH PLACE</p>
         </div>
       </article>
 
@@ -301,6 +297,13 @@
       <p class="mono">DHAKA, BANGLADESH</p>
     </div>
   </footer>
+
+  <!-- tmux-style status bar -->
+  <div class="sbar mono" id="sbar" role="status" aria-label="Reading progress">
+    <span class="sb-host">[saidul@ik0zy]</span>
+    <span class="sb-sect" id="sbSect">▸ intro</span>
+    <span class="sb-right"><span class="sb-meter" id="sbMeter"></span> <span id="sbPct">0%</span> <span class="sb-clock" id="sbClock"></span></span>
+  </div>
 
   <script src="js/main.js"></script>
 </body>
