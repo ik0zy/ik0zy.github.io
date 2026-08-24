@@ -183,8 +183,16 @@ a { color: inherit; }
   padding: 8px 16px;
   border-top: 1px solid #000;
 }
+.sb-host, .sb-sect {
+  background: none; border: 0; padding: 0;
+  font: inherit; letter-spacing: inherit;
+  cursor: pointer; text-align: left;
+  transition: color .18s ease;
+}
 .sb-host { color: var(--terra); }
+.sb-host:hover { color: #f3ecdc; }
 .sb-sect { color: #f3ecdc; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.sb-sect:hover { color: var(--terra); }
 .sbar .sb-right { margin-left: auto; display: flex; align-items: center; gap: 10px; white-space: nowrap; font-variant-numeric: tabular-nums; }
 .sb-meter { color: var(--terra); letter-spacing: -.02em; }
 .sb-clock { color: #9a917f; }
@@ -309,6 +317,10 @@ body { padding-bottom: 46px; }
 }
 @media (max-width: 640px) {
   .detailcard { left: 12px; right: 12px; width: auto; bottom: 46px; }
+}
+@media (max-width: 640px) {
+  .mk-lab, .spotheights { display: none; }
+  .marker .mk-num { font-size: 15px; }
 }
 @keyframes cardin { from { opacity: 0; transform: translateY(10px);} }
 .dc-close {

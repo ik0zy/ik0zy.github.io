@@ -55,6 +55,25 @@
     setInterval(tick, 20000);
   })();
 
+  /* ── sbar buttons: host = back to top · section = cycle next ── */
+  (function sbarButtons() {
+    var home = document.getElementById("sbHome");
+    var zones = Array.prototype.slice.call(document.querySelectorAll("[data-section]"));
+    if (home) home.addEventListener("click", function () {
+      window.scrollTo({ top: 0, behavior: reduced ? "auto" : "smooth" });
+    });
+    if (!sbSect || !zones.length) return;
+    sbSect.addEventListener("click", function () {
+      var current = (sbSect.textContent || "").replace("\u25B8 ", "").trim();
+      var idx = -1;
+      for (var i = 0; i < zones.length; i++) {
+        if (zones[i].getAttribute("data-section") === current) { idx = i; break; }
+      }
+      var next = zones[(idx + 1) % zones.length];
+      next.scrollIntoView({ behavior: reduced ? "auto" : "smooth", block: "start" });
+    });
+  })();
+
   /* ── typed prompt ── */
   (function typedPrompt() {
     var t = document.getElementById("plTyped");
@@ -302,6 +321,12 @@
       g.setAttribute("tabindex", "0");
       g.setAttribute("aria-label", m.title);
 
+      /* generous invisible tap target */
+      var hit = document.createElementNS(SVGNS, "circle");
+      hit.setAttribute("class", "mk-hit");
+      hit.setAttribute("cx", m.x); hit.setAttribute("cy", m.y); hit.setAttribute("r", 30);
+      hit.setAttribute("fill", "transparent");
+
       var ring = document.createElementNS(SVGNS, "circle");
       ring.setAttribute("class", "mk-pulse");
       ring.setAttribute("cx", m.x); ring.setAttribute("cy", m.y); ring.setAttribute("r", 14);
@@ -330,7 +355,7 @@
       lab.setAttribute("text-anchor", "middle");
       lab.textContent = m.title.split(/[—:(]/)[0].trim().toUpperCase();
 
-      g.appendChild(ring); g.appendChild(circ); g.appendChild(num);
+      g.appendChild(hit); g.appendChild(ring); g.appendChild(circ); g.appendChild(num);
       g.appendChild(leader); g.appendChild(lab);
 
       g.addEventListener("click", function () { openMarker(m, g); });
@@ -362,6 +387,19 @@
     }, { threshold: 0.25 });
     pio.observe(plate);
   }
+
+  /* mobile: scale markers up so taps land and numbers read */
+  function sizeMarkers() {
+    if (!layer) return;
+    var small = window.innerWidth < 640;
+    layer.querySelectorAll(".marker").forEach(function (g) {
+      g.style.transformBox = "fill-box";
+      g.style.transformOrigin = "center";
+      g.style.transform = small ? "scale(2.1)" : "";
+    });
+  }
+  sizeMarkers();
+  window.addEventListener("resize", sizeMarkers);
 
   /* legend bar — highlight section in view */
   var lgLinks = document.querySelectorAll(".legendbar a");
