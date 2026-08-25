@@ -136,6 +136,25 @@
     function apply(art, pal) {
       cur = { art: art, pal: pal };
       document.documentElement.style.setProperty("--terra", pal.ac);
+      /* favicon follows the rolled palette */
+      (function syncFavicon() {
+        var cv = document.createElement("canvas");
+        cv.width = 64; cv.height = 64;
+        var cx = cv.getContext("2d");
+        cx.fillStyle = "#17160f";
+        cx.fillRect(0, 0, 64, 64);
+        cx.fillStyle = pal.ac;
+        cx.fillRect(14, 34, 8, 16);
+        cx.fillRect(28, 24, 8, 26);
+        cx.fillRect(42, 14, 8, 36);
+        var link = document.querySelector('link[rel="icon"]');
+        if (!link) {
+          link = document.createElement("link");
+          link.rel = "icon";
+          document.head.appendChild(link);
+        }
+        link.href = cv.toDataURL("image/png");
+      })();
       var maxLen = 0;
       for (var i = 0; i < WORDS.length; i++) {
         var txt = renderWord(WORDS[i], art);
@@ -187,6 +206,31 @@
   } else {
     revealEls.forEach(function (el) { el.classList.add("in"); });
   }
+
+  /* ── section headers decode from terminal static ── */
+  (function decodeHeaders() {
+    var CHS = "░▒▓#*+=:\u00B7";
+    var heads = document.querySelectorAll(".sec-t");
+    if (!heads.length) return;
+    heads.forEach(function (h) { h.dataset.fin = h.textContent; });
+    if (!("IntersectionObserver" in window) || reduced) return;
+    var dio = new IntersectionObserver(function (entries) {
+      entries.forEach(function (e) {
+        if (!e.isIntersecting || e.target.dataset.done) return;
+        dio.unobserve(e.target);
+        e.target.dataset.done = "1";
+        var fin = e.target.dataset.fin, f = 0, n = fin.length;
+        var iv = setInterval(function () {
+          f++;
+          e.target.textContent = fin.split("").map(function (ch, i) {
+            return i < f ? ch : (ch === " " ? " " : CHS[(Math.random() * CHS.length) | 0]);
+          }).join("");
+          if (f >= n) { e.target.textContent = fin; clearInterval(iv); }
+        }, 26);
+      });
+    }, { threshold: 0.4 });
+    heads.forEach(function (h) { dio.observe(h); });
+  })();
 
   /* ── marker data (all facts from the résumé) ── */
   var MARKERS = [
@@ -383,6 +427,11 @@
         gs.forEach(function (g, i) {
           setTimeout(function () { g.classList.add("in"); }, 180 * i);
         });
+        /* desktop: open marker 01 so the map reads as interactive immediately */
+        var first = layer.querySelector(".marker");
+        if (first && window.innerWidth >= 640 && !activeBtn) {
+          setTimeout(function () { openMarker(MARKERS[0], first); }, 180 * MARKERS.length + 250);
+        }
       });
     }, { threshold: 0.25 });
     pio.observe(plate);
