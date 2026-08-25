@@ -113,8 +113,8 @@
   (function asciiName() {
     var nb = document.getElementById("nameblock");
     if (!nb) return;
-    var pres = [document.getElementById("art1"), document.getElementById("art2"), document.getElementById("art3")];
-    var WORDS = ["MOHAMMAD", "SAIDUL", "ISLAM"];
+    var pres = [document.getElementById("art1"), document.getElementById("art2")];
+    var WORDS = ["SAIDUL", "ISLAM"];
 
     function renderWord(word, art) {
       var rows = ["", "", "", "", ""];
