@@ -1,472 +1,328 @@
-/* Portfolio v5 — career map, markers, detail card, tmux bar, ASCII name, reveals */
+/* v6 TRAINING RUN — loss canvas, rank sim, detector, terminal, palette, sbar */
 (function () {
   "use strict";
-
-  /* ── year ── */
+  var reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
   var yr = document.getElementById("yr");
   if (yr) yr.textContent = new Date().getFullYear();
 
-  /* ── ?static — render fully revealed (debug/QA) ── */
-  if (location.search.indexOf("static") !== -1) document.documentElement.classList.add("static");
-
-  var reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-
-  /* ── bottom tmux bar: scroll meter, live section, clock ── */
-  var sbMeter = document.getElementById("sbMeter");
-  var sbPct = document.getElementById("sbPct");
-  var sbSect = document.getElementById("sbSect");
-  var sbClock = document.getElementById("sbClock");
-  var METER = 8;
-
-  function updateProgress() {
-    var h = document.documentElement;
-    var max = h.scrollHeight - h.clientHeight;
-    var p = max > 0 ? Math.min(1, (h.scrollTop || document.body.scrollTop) / max) : 0;
-    var on = Math.round(p * METER);
-    if (sbMeter) sbMeter.textContent = "\u2593".repeat(on) + "\u2591".repeat(METER - on);
-    if (sbPct) sbPct.textContent = String(Math.round(p * 100)).padStart(2, "0") + "%";
-  }
-  window.addEventListener("scroll", function () {
-    if (updateProgress.t) return;
-    updateProgress.t = true;
-    requestAnimationFrame(function () { updateProgress(); updateProgress.t = false; });
-  }, { passive: true });
-  window.addEventListener("resize", updateProgress);
-  updateProgress();
-
-  (function trackSection() {
-    var zones = document.querySelectorAll("[data-section]");
-    if (!("IntersectionObserver" in window) || !zones.length || !sbSect) return;
-    var sio = new IntersectionObserver(function (entries) {
-      entries.forEach(function (e) {
-        if (e.isIntersecting) sbSect.textContent = "\u25B8 " + e.target.getAttribute("data-section");
-      });
-    }, { rootMargin: "-35% 0px -55% 0px" });
-    zones.forEach(function (z) { sio.observe(z); });
+  /* ── boot ── */
+  (function boot() {
+    var b = document.getElementById("boot"), f = document.getElementById("bootFill");
+    if (!b) return;
+    if (reduced || sessionStorage.getItem("v6boot")) { b.classList.add("done"); setTimeout(function(){ b.remove(); }, 500); return; }
+    var p = 0;
+    var iv = setInterval(function () {
+      p = Math.min(100, p + 8 + Math.random() * 14);
+      if (f) f.style.width = p + "%";
+      if (p >= 100) { clearInterval(iv); b.classList.add("done"); sessionStorage.setItem("v6boot", "1"); setTimeout(function(){ b.remove(); }, 550); }
+    }, 90);
+    setTimeout(function(){ if (document.body.contains(b)) { b.classList.add("done"); setTimeout(function(){ b.remove(); }, 550); } }, 2200);
   })();
 
-  (function clock() {
-    if (!sbClock) return;
+  /* ── loss canvas ── */
+  (function loss() {
+    var cv = document.getElementById("lossCanvas");
+    if (!cv) return;
+    var ctx = cv.getContext("2d");
+    var W = cv.width, H = cv.height;
+    var lossEl = document.getElementById("statLoss"), accEl = document.getElementById("statAcc"),
+        rankEl = document.getElementById("statRank"), epEl = document.getElementById("statEpoch"),
+        bigRank = document.getElementById("bigRank"), fill = document.getElementById("rankFill"),
+        dot = document.getElementById("rankDot"), note = document.getElementById("rankNote"),
+        stamp = document.getElementById("expertStamp"), log = document.getElementById("conLog");
+    var logs = ["$ python train.py --backbone convnext --tta --ensemble", "epoch 12 · loss 0.41 · acc 88.3% · rank 612 ▲", "epoch 26 · loss 0.27 · acc 93.1% · rank 128 ▲▲", "epoch 40 · loss 0.21 · acc 94.7% · rank 40 ★ EXPERT", "checkpoint saved · best_model.pt"];
+    function curve(t) { return 0.21 + 0.79 * Math.exp(-3.2 * t) + 0.05 * Math.exp(-9 * t) * Math.sin(t * 22); }
+    function draw(prog) {
+      ctx.clearRect(0, 0, W, H);
+      ctx.strokeStyle = "#ffffff14"; ctx.lineWidth = 1;
+      for (var g = 1; g < 5; g++) { ctx.beginPath(); ctx.moveTo(0, H / 5 * g); ctx.lineTo(W, H / 5 * g); ctx.stroke(); }
+      // glow area
+      ctx.beginPath();
+      var n = 90, pts = [];
+      for (var i = 0; i <= n; i++) {
+        var t = (i / n) * prog;
+        var x = 24 + (W - 48) * (i / n);
+        var v = curve(t);
+        var y = 24 + ((1.05 - v) / 1.05) * (H - 70);
+        pts.push([x, y]);
+      }
+      ctx.moveTo(pts[0][0], H - 8);
+      pts.forEach(function (p) { ctx.lineTo(p[0], p[1]); });
+      ctx.lineTo(pts[pts.length - 1][0], H - 8); ctx.closePath();
+      var gr = ctx.createLinearGradient(0, 0, 0, H);
+      gr.addColorStop(0, "#cdff3f2e"); gr.addColorStop(1, "#cdff3f00");
+      ctx.fillStyle = gr; ctx.fill();
+      // line
+      ctx.beginPath();
+      pts.forEach(function (p, i) { i ? ctx.lineTo(p[0], p[1]) : ctx.moveTo(p[0], p[1]); });
+      ctx.strokeStyle = "#cdff3f"; ctx.lineWidth = 2.6; ctx.lineJoin = "round"; ctx.stroke();
+      // head
+      var h = pts[pts.length - 1];
+      ctx.beginPath(); ctx.arc(h[0], h[1], 5, 0, 7); ctx.fillStyle = "#cdff3f"; ctx.fill();
+      ctx.beginPath(); ctx.arc(h[0], h[1], 10, 0, 7); ctx.strokeStyle = "#cdff3f66"; ctx.stroke();
+      // baseline ghost
+      ctx.setLineDash([5, 6]); ctx.strokeStyle = "#ff5d2a88"; ctx.lineWidth = 1.4;
+      ctx.beginPath(); ctx.moveTo(24, 24 + ((1.05 - 0.55) / 1.05) * (H - 70)); ctx.lineTo(W - 24, 24 + ((1.05 - 0.55) / 1.05) * (H - 70)); ctx.stroke();
+      ctx.setLineDash([]);
+      ctx.fillStyle = "#8d9ab0"; ctx.font = "11px 'IBM Plex Mono',monospace";
+      ctx.fillText("BASELINE 0.55", W - 130, 24 + ((1.05 - 0.55) / 1.05) * (H - 70) - 8);
+      ctx.fillText("LOSS", 10, 18);
+    }
+    function fmt(n) { return n.toLocaleString("en-US"); }
+    function render(prog) {
+      var v = curve(prog);
+      var acc = 51.2 + (94.7 - 51.2) * Math.pow(prog, 0.65);
+      var rank = Math.round(1564 - (1564 - 40) * Math.pow(prog, 1.6));
+      var ep = Math.round(prog * 40);
+      if (lossEl) lossEl.textContent = v.toFixed(3);
+      if (accEl) accEl.textContent = acc.toFixed(1) + "%";
+      if (rankEl) rankEl.textContent = fmt(rank);
+      if (epEl) epEl.textContent = String(ep).padStart(2, "0") + "/40";
+      if (bigRank) bigRank.textContent = fmt(rank);
+      var pct = (1564 - rank) / (1564 - 40) * 100;
+      if (fill) fill.style.width = Math.max(2, pct) + "%";
+      if (dot) dot.style.left = Math.max(2, pct) + "%";
+      if (note) note.textContent = prog >= 1 ? "★ top 3% — expert tier when the board froze." : prog > .6 ? "ensemble kicking in — climbing hundreds…" : prog > .25 ? "tta on — leaving the middle of the pack…" : "starting from the back of the pack…";
+      if (log) log.textContent = logs[Math.min(logs.length - 1, Math.floor(prog * logs.length))];
+      if (prog >= 0.985 && stamp) stamp.classList.add("show");
+      draw(prog);
+    }
+    if (reduced) { render(1); return; }
+    var start = null, DUR = 2600;
+    function frame(ts) {
+      if (!start) start = ts;
+      var p = Math.min(1, (ts - start) / DUR);
+      var e = 1 - Math.pow(1 - p, 3);
+      render(e);
+      if (p < 1) requestAnimationFrame(frame);
+    }
+    var seen = false;
+    if ("IntersectionObserver" in window) {
+      var io = new IntersectionObserver(function (es) {
+        es.forEach(function (e) { if (e.isIntersecting && !seen) { seen = true; requestAnimationFrame(frame); io.disconnect(); } });
+      }, { threshold: 0.2 });
+      io.observe(cv);
+    } else requestAnimationFrame(frame);
+  })();
+
+  /* ── leaderboard lab ── */
+  (function lab() {
+    var swT = document.getElementById("swTta"), swE = document.getElementById("swEns"), swL = document.getElementById("swTl");
+    var labRank = document.getElementById("labRank"), lbPos = document.getElementById("lbPos"), lbScore = document.getElementById("lbScore");
+    var bellFill = document.getElementById("bellFill"), bellCurve = document.getElementById("bellCurve"), bellDot = document.getElementById("bellDot");
+    if (!labRank) return;
+    // bell curve geometry (shared)
+    function bellY(x) { var m = 300, s = 130; return 26 + 92 * Math.exp(-Math.pow(x - m, 2) / (2 * s * s)); }
+    function xForRank(r) { var t = 1 - (r - 1) / 1563; return 8 + t * 584; } // rank1→right
+    function buildCurve() {
+      var d = "", f = "";
+      for (var x = 0; x <= 600; x += 6) { var y = 128 - (bellY(x) - 26) * 0.95; d += (x ? " L" : "M") + x + "," + y.toFixed(1); }
+      f = d + " L600,128 L0,128 Z";
+      if (bellCurve) bellCurve.setAttribute("d", d);
+      if (bellFill) bellFill.setAttribute("d", f);
+    }
+    buildCurve();
+    function state() {
+      var r = 1564, s = 0.7104;
+      if (swT && swT.checked) { r -= 38; s += 0.021; }
+      if (swE && swE.checked) { r -= 612; s += 0.118; }
+      if (swL && swL.checked) { r -= 874; s += 0.126; }
+      return { r: Math.max(40, r), s: Math.min(0.9754, s) };
+    }
+    function paint() {
+      var st = state();
+      labRank.textContent = "RANK " + st.r.toLocaleString("en-US") + " / 1,564";
+      if (lbPos) lbPos.textContent = st.r;
+      if (lbScore) lbScore.textContent = st.s.toFixed(4);
+      if (bellDot) {
+        var x = xForRank(st.r), y = 128 - (bellY(x) - 26) * 0.95;
+        bellDot.setAttribute("cx", x); bellDot.setAttribute("cy", y);
+      }
+      var you = document.getElementById("lbYou");
+      if (you) you.style.order = st.r < 3 ? "-1" : "";
+    }
+    [swT, swE, swL].forEach(function (s) { if (s) s.addEventListener("change", paint); });
+    paint();
+    // auto-demo once: turn all on sequentially so visitors see it move
+    if (!reduced) {
+      var io2 = new IntersectionObserver(function (es) {
+        es.forEach(function (e) {
+          if (!e.isIntersecting) return;
+          io2.disconnect();
+          var seq = [swT, swE, swL], i = 0;
+          var iv = setInterval(function () {
+            if (i >= seq.length || !seq[i]) { clearInterval(iv); return; }
+            seq[i].checked = true; paint(); i++;
+          }, 700);
+        });
+      }, { threshold: 0.35 });
+      var lab = document.getElementById("runs");
+      if (lab) io2.observe(lab);
+    }
+  })();
+
+  /* ── detector demo ── */
+  (function det() {
+    var b = document.getElementById("detBtn"), s = document.getElementById("detStage");
+    if (!b || !s) return;
+    b.addEventListener("click", function () {
+      s.classList.remove("fired"); void s.offsetWidth; s.classList.add("fired");
+      b.textContent = "↻ run again";
+    });
+    if ("IntersectionObserver" in window && !reduced) {
+      var io = new IntersectionObserver(function (es) {
+        es.forEach(function (e) { if (e.isIntersecting) { s.classList.add("fired"); io.disconnect(); } });
+      }, { threshold: 0.4 });
+      io.observe(s);
+    } else s.classList.add("fired");
+  })();
+
+  /* ── terminal typing ── */
+  (function term() {
+    var el = document.getElementById("termBody");
+    if (!el) return;
+    var lines = [
+      ["$ pip install uiu-calendar", "g"],
+      ["Collecting uiu-calendar … done ✓", "d"],
+      ["$ python scrape.py --trimester spring26", "g"],
+      ["→ fetching academic-calendar.pdf …", "c"],
+      ["→ parsing 14 pages · 62 events …", "c"],
+      ["✓ wrote calendar.csv (62 rows, 0 conflicts)", "g"],
+      ["→ import to Google Calendar: 1 click", "d"],
+      ["$ # used across campus every trimester_", "d"]
+    ];
+    if (reduced) {
+      el.innerHTML = lines.map(function (l) { return '<span class="' + l[1] + '">' + l[0].replace(/</g, "&lt;") + "</span>"; }).join("\n");
+      return;
+    }
+    var li = 0, ci = 0, out = "";
     function tick() {
-      var d = new Date();
-      sbClock.textContent = String(d.getHours()).padStart(2, "0") + ":" + String(d.getMinutes()).padStart(2, "0");
+      if (li >= lines.length) return;
+      var txt = lines[li][0], cls = lines[li][1];
+      ci++;
+      var cur = txt.slice(0, ci).replace(/</g, "&lt;");
+      el.innerHTML = out + '<span class="' + cls + '">' + cur + "</span><span class=\"g\">▌</span>";
+      if (ci >= txt.length) { out += '<span class="' + cls + '">' + txt.replace(/</g, "&lt;") + "</span>\n"; li++; ci = 0; setTimeout(tick, 320); }
+      else setTimeout(tick, 16 + Math.random() * 26);
     }
-    tick();
-    setInterval(tick, 20000);
+    var io = new IntersectionObserver(function (es) {
+      es.forEach(function (e) { if (e.isIntersecting) { io.disconnect(); tick(); } });
+    }, { threshold: 0.3 });
+    io.observe(el);
   })();
 
-  /* ── sbar buttons: host = back to top · section = cycle next ── */
-  (function sbarButtons() {
-    var home = document.getElementById("sbHome");
-    var zones = Array.prototype.slice.call(document.querySelectorAll("[data-section]"));
-    if (home) home.addEventListener("click", function () {
-      window.scrollTo({ top: 0, behavior: reduced ? "auto" : "smooth" });
-    });
-    if (!sbSect || !zones.length) return;
-    sbSect.addEventListener("click", function () {
-      var current = (sbSect.textContent || "").replace("\u25B8 ", "").trim();
-      var idx = -1;
-      for (var i = 0; i < zones.length; i++) {
-        if (zones[i].getAttribute("data-section") === current) { idx = i; break; }
-      }
-      var next = zones[(idx + 1) % zones.length];
-      next.scrollIntoView({ behavior: reduced ? "auto" : "smooth", block: "start" });
-    });
-  })();
-
-  /* ── typed prompt ── */
-  (function typedPrompt() {
-    var t = document.getElementById("plTyped");
-    if (!t) return;
-    var s = "./portfolio";
-    if (reduced) { t.textContent = s; return; }
-    var i = 0;
-    (function step() { t.textContent = s.slice(0, ++i); if (i <= s.length) setTimeout(step, 54); })();
-  })();
-
-  /* ── ASCII name: 3 art styles × 6 palettes, click the name to re-roll ── */
-  var GLYPHS = {
-    M: ["█   █", "██ ██", "█ █ █", "█   █", "█   █"],
-    O: [" ███ ", "█   █", "█   █", "█   █", " ███ "],
-    H: ["█   █", "█   █", "█████", "█   █", "█   █"],
-    A: [" ███ ", "█   █", "█████", "█   █", "█   █"],
-    D: ["████ ", "█   █", "█   █", "█   █", "████ "],
-    S: [" ███ ", "█    ", " ███ ", "    █", "███  "],
-    I: ["███", " █ ", " █ ", " █ ", "███"],
-    U: ["█   █", "█   █", "█   █", "█   █", " ███ "],
-    L: ["█    ", "█    ", "█    ", "█    ", "█████"]
-  };
-  var ARTS = [
-    { name: "SOLID",  ch: function () { return "█"; } },
-    { name: "SHADE",  ch: function (r) { return ["█", "█", "▓", "▒", "▒"][r]; } },
-    { name: "DITHER", ch: function (r, c) { return (r + c) % 2 ? "▓" : "█"; } }
-  ];
-  var PALETTES = [
-    { name: "TERRA",  ac: "#B4552D", g: "linear-gradient(180deg,#D98B5F 0%,#B4552D 45%,#7E3A1E 100%)" },
-    { name: "INDIGO", ac: "#4A5A9A", g: "linear-gradient(180deg,#8B9BD0 0%,#4A5A9A 45%,#2E3A66 100%)" },
-    { name: "OLIVE",  ac: "#6E7C35", g: "linear-gradient(180deg,#A3B45C 0%,#6E7C35 45%,#454E1F 100%)" },
-    { name: "PLUM",   ac: "#8A4A7A", g: "linear-gradient(180deg,#B57AA8 0%,#8A4A7A 45%,#5A2E4E 100%)" },
-    { name: "TEAL",   ac: "#2E7A72", g: "linear-gradient(180deg,#5FA89E 0%,#2E7A72 45%,#1D4E48 100%)" },
-    { name: "GOLD",   ac: "#A8862A", g: "linear-gradient(180deg,#D6B258 0%,#A8862A 45%,#6E571C 100%)" }
-  ];
-
-  (function asciiName() {
-    var nb = document.getElementById("nameblock");
-    if (!nb) return;
-    var pres = [document.getElementById("art1"), document.getElementById("art2")];
-    var WORDS = ["SAIDUL", "ISLAM"];
-
-    function renderWord(word, art) {
-      var rows = ["", "", "", "", ""];
-      for (var r = 0; r < 5; r++) {
-        var line = "";
-        for (var i = 0; i < word.length; i++) {
-          var row = GLYPHS[word[i]][r];
-          for (var c = 0; c < row.length; c++) {
-            line += row[c] === "█" ? art.ch(r, c) : " ";
-          }
-          line += " ";
-        }
-        rows[r] = line;
-      }
-      return rows.join("\n");
-    }
-
-    var cur = null, busy = false;
-    function apply(art, pal) {
-      cur = { art: art, pal: pal };
-      document.documentElement.style.setProperty("--terra", pal.ac);
-      /* favicon follows the rolled palette */
-      (function syncFavicon() {
-        var cv = document.createElement("canvas");
-        cv.width = 64; cv.height = 64;
-        var cx = cv.getContext("2d");
-        cx.fillStyle = "#17160f";
-        cx.fillRect(0, 0, 64, 64);
-        cx.fillStyle = pal.ac;
-        cx.fillRect(14, 34, 8, 16);
-        cx.fillRect(28, 24, 8, 26);
-        cx.fillRect(42, 14, 8, 36);
-        var link = document.querySelector('link[rel="icon"]');
-        if (!link) {
-          link = document.createElement("link");
-          link.rel = "icon";
-          document.head.appendChild(link);
-        }
-        link.href = cv.toDataURL("image/png");
-      })();
-      var maxLen = 0;
-      for (var i = 0; i < WORDS.length; i++) {
-        var txt = renderWord(WORDS[i], art);
-        pres[i].textContent = txt;
-        pres[i].style.background = pal.g;
-        pres[i].style.webkitBackgroundClip = "text";
-        pres[i].style.backgroundClip = "text";
-        var rows = txt.split("\n");
-        for (var j = 0; j < rows.length; j++) if (rows[j].length > maxLen) maxLen = rows[j].length;
-      }
-      var fs = Math.max(9, Math.min(26, nb.clientWidth / (maxLen * 0.62)));
-      pres.forEach(function (el) { el.style.fontSize = fs + "px"; });
-    }
-
-    function reroll() {
-      if (busy) return;
-      var na, np;
-      do {
-        na = ARTS[(Math.random() * ARTS.length) | 0];
-        np = PALETTES[(Math.random() * PALETTES.length) | 0];
-      } while (cur && na === cur.art && np === cur.pal);
-      if (reduced) { apply(na, np); return; }
-      busy = true;
-      var n = 0;
-      var iv = setInterval(function () {
-        pres.forEach(function (el) {
-          el.textContent = el.textContent.replace(/[^\n]/g, function (ch) {
-            return ch === " " ? " " : "░▒▓█"[(Math.random() * 4) | 0];
-          });
-        });
-        if (++n >= 4) { clearInterval(iv); apply(na, np); busy = false; }
-      }, 46);
-    }
-
-    apply(ARTS[(Math.random() * ARTS.length) | 0], PALETTES[(Math.random() * PALETTES.length) | 0]);
-    nb.addEventListener("click", reroll);
-    window.addEventListener("resize", function () { if (cur) apply(cur.art, cur.pal); });
-  })();
-
-  /* ── scroll reveals ── */
-  var revealEls = document.querySelectorAll(".reveal");
-  if ("IntersectionObserver" in window) {
-    var io = new IntersectionObserver(function (entries) {
-      entries.forEach(function (e) {
-        if (e.isIntersecting) { e.target.classList.add("in"); io.unobserve(e.target); }
-      });
+  /* ── reveals ── */
+  (function reveals() {
+    var els = document.querySelectorAll(".reveal");
+    if (!("IntersectionObserver" in window) || reduced) { els.forEach(function (e) { e.classList.add("in"); }); return; }
+    var io = new IntersectionObserver(function (es) {
+      es.forEach(function (e) { if (e.isIntersecting) { e.target.classList.add("in"); io.unobserve(e.target); } });
     }, { threshold: 0.12, rootMargin: "0px 0px -40px 0px" });
-    revealEls.forEach(function (el) { io.observe(el); });
-  } else {
-    revealEls.forEach(function (el) { el.classList.add("in"); });
-  }
-
-  /* ── section headers decode from terminal static ── */
-  (function decodeHeaders() {
-    var CHS = "░▒▓#*+=:\u00B7";
-    var heads = document.querySelectorAll(".sec-t");
-    if (!heads.length) return;
-    heads.forEach(function (h) { h.dataset.fin = h.textContent; });
-    if (!("IntersectionObserver" in window) || reduced) return;
-    var dio = new IntersectionObserver(function (entries) {
-      entries.forEach(function (e) {
-        if (!e.isIntersecting || e.target.dataset.done) return;
-        dio.unobserve(e.target);
-        e.target.dataset.done = "1";
-        var fin = e.target.dataset.fin, f = 0, n = fin.length;
-        var iv = setInterval(function () {
-          f++;
-          e.target.textContent = fin.split("").map(function (ch, i) {
-            return i < f ? ch : (ch === " " ? " " : CHS[(Math.random() * CHS.length) | 0]);
-          }).join("");
-          if (f >= n) { e.target.textContent = fin; clearInterval(iv); }
-        }, 26);
-      });
-    }, { threshold: 0.4 });
-    heads.forEach(function (h) { dio.observe(h); });
+    els.forEach(function (e) { io.observe(e); });
   })();
 
-  /* ── marker data (all facts from the résumé) ── */
-  var MARKERS = [
-    {
-      n: 1, x: 905, y: 300,
-      ref: "MARKER 01 · RANK 40 / 1,564 · TOP 3%",
-      title: "Kaggle Competitions Expert",
-      kind: "COMPETITION — RecodAI: LUC Scientific Image Forgery Detection",
-      body: "40th of 1,564 teams worldwide — top 3% — using transfer learning, ensembling and test-time augmentation.",
-      fact: "EXPERT TIER AWARDED WHEN THE LEADERBOARD FROZE."
-    },
-    {
-      n: 2, x: 620, y: 415,
-      ref: "MARKER 02 · IEEE XPLORE",
-      title: "IEEE ICCIT 2025 Publication",
-      kind: "PUBLICATION — BnSFD",
-      body: "BnSFD: YOLOv12-Based Detection of Bangladeshi Street Foods for Cultural Heritage. Real-time detection, indexed on IEEE Xplore.",
-      fact: "PEER-REVIEWED AND PUBLICLY ACCESSIBLE.",
-      link: { href: "https://ieeexplore.ieee.org/document/11490261", text: "Read on IEEE Xplore ↗" }
-    },
-    {
-      n: 3, x: 430, y: 250,
-      ref: "MARKER 03 · TWO FIRST PLACES",
-      title: "Breakthrough I & II — 1st Place × 2",
-      kind: "AWARD — UIU Intra-Kaggle Series",
-      body: "Customer Decode Challenge, then Good Food, Good Gut!. Two consecutive first places built on EDA, feature engineering and ensemble models.",
-      fact: "39 TEAMS AHEAD OF NOBODY — 1,524 BEHIND, TWICE OVER."
-    },
-    {
-      n: 4, x: 300, y: 560,
-      ref: "MARKER 04 · OPEN SOURCE",
-      title: "UIU-Calendar",
-      kind: "PROJECT — Open-source application, 2024–present",
-      body: "Scrapes the university's academic-calendar PDF into clean CSVs that import directly into Google Calendar. Built for every student on campus.",
-      fact: "USED ACROSS CAMPUS EVERY TRIMESTER.",
-      link: { href: "https://github.com/ik0zy/UIU-Calendar", text: "View project ↗" }
-    },
-    {
-      n: 5, x: 760, y: 590,
-      ref: "MARKER 05 · LEADERSHIP",
-      title: "Co-Head of Competitions",
-      kind: "LEADERSHIP — UIU Data Science Club, 2026–present",
-      body: "Leads planning and execution of the club's Kaggle competitions, including the Breakthrough series.",
-      fact: "PROBLEM SELECTION · EVALUATION · OPERATIONS."
-    },
-    {
-      n: 6, x: 170, y: 380,
-      ref: "MARKER 06 · EDUCATION",
-      title: "BSc Data Science, UIU",
-      kind: "EDUCATION — 09/2023 to present",
-      body: "United International University, Dhaka.",
-      fact: "PERFECT 5.00 GPAs AT BOTH PRIOR SCHOOLS (SSC & HSC)."
+  /* ── sbar: progress, section, clock, jump ── */
+  (function sbar() {
+    var meter = document.getElementById("sbMeter"), pct = document.getElementById("sbPct"),
+        sect = document.getElementById("sbSect"), clock = document.getElementById("sbClock"),
+        home = document.getElementById("sbHome");
+    function prog() {
+      var h = document.documentElement, max = h.scrollHeight - h.clientHeight;
+      var p = max > 0 ? Math.min(1, (h.scrollTop || document.body.scrollTop) / max) : 0;
+      var on = Math.round(p * 8);
+      if (meter) meter.textContent = "▓".repeat(on) + "░".repeat(8 - on);
+      if (pct) pct.textContent = String(Math.round(p * 100)).padStart(2, "0") + "%";
     }
-  ];
-
-  var SVGNS = "http://www.w3.org/2000/svg";
-
-  /* ── graticule + grid refs ── */
-  var grat = document.getElementById("graticule");
-  if (grat) {
-    var cols = 6, rows = 6;
-    for (var c = 1; c < cols; c++) {
-      var v = document.createElementNS(SVGNS, "line");
-      v.setAttribute("x1", 1200 / cols * c); v.setAttribute("x2", 1200 / cols * c);
-      v.setAttribute("y1", 0); v.setAttribute("y2", 760);
-      v.setAttribute("stroke", "#22303e"); v.setAttribute("stroke-opacity", ".14");
-      v.setAttribute("stroke-dasharray", "3 6");
-      grat.appendChild(v);
-    }
-    for (var r = 1; r < rows; r++) {
-      var h = document.createElementNS(SVGNS, "line");
-      h.setAttribute("y1", 760 / rows * r); h.setAttribute("y2", 760 / rows * r);
-      h.setAttribute("x1", 0); h.setAttribute("x2", 1200);
-      h.setAttribute("stroke", "#22303e"); h.setAttribute("stroke-opacity", ".14");
-      h.setAttribute("stroke-dasharray", "3 6");
-      grat.appendChild(h);
-    }
-  }
-
-  /* ── markers ── */
-  var layer = document.getElementById("markers");
-  var status = document.getElementById("plateStatus");
-  var card = document.getElementById("detailCard");
-  var dcRef = document.getElementById("dcRef");
-  var dcTitle = document.getElementById("dcTitle");
-  var dcKind = document.getElementById("dcKind");
-  var dcBody = document.getElementById("dcBody");
-  var activeBtn = null;
-
-  function closeCard() {
-    card.hidden = true;
-    if (activeBtn) activeBtn.classList.remove("active");
-    activeBtn = null;
-    if (status) status.textContent = "SELECT A MARKER FOR DETAILS";
-  }
-
-  function openMarker(m, btn) {
-    if (activeBtn === btn) { closeCard(); return; }
-    if (activeBtn) activeBtn.classList.remove("active");
-    activeBtn = btn;
-    btn.classList.add("active");
-
-    dcRef.textContent = m.ref;
-    dcTitle.textContent = m.title;
-    dcKind.textContent = m.kind;
-    dcBody.innerHTML = "";
-    var p = document.createElement("p");
-    p.textContent = m.body;
-    dcBody.appendChild(p);
-    if (m.link) {
-      var a = document.createElement("a");
-      a.href = m.link.href; a.target = "_blank"; a.rel = "noopener";
-      a.className = "mono"; a.style.cssText =
-        "display:inline-block;margin-top:8px;font-size:11px;letter-spacing:.08em";
-      a.textContent = m.link.text.toUpperCase();
-      dcBody.appendChild(a);
-    }
-    var f = document.createElement("p");
-    f.className = "dc-fact";
-    f.textContent = "◆ " + m.fact;
-    dcBody.appendChild(f);
-
-    card.hidden = false;
-    if (status) status.textContent = m.ref + " — " + m.title.toUpperCase();
-  }
-
-  if (layer) {
-    MARKERS.forEach(function (m) {
-      var g = document.createElementNS(SVGNS, "g");
-      g.setAttribute("class", "marker pulse");
-      g.setAttribute("role", "button");
-      g.setAttribute("tabindex", "0");
-      g.setAttribute("aria-label", m.title);
-
-      /* generous invisible tap target */
-      var hit = document.createElementNS(SVGNS, "circle");
-      hit.setAttribute("class", "mk-hit");
-      hit.setAttribute("cx", m.x); hit.setAttribute("cy", m.y); hit.setAttribute("r", 30);
-      hit.setAttribute("fill", "transparent");
-
-      var ring = document.createElementNS(SVGNS, "circle");
-      ring.setAttribute("class", "mk-pulse");
-      ring.setAttribute("cx", m.x); ring.setAttribute("cy", m.y); ring.setAttribute("r", 14);
-
-      var circ = document.createElementNS(SVGNS, "circle");
-      circ.setAttribute("class", "mk-ring");
-      circ.setAttribute("cx", m.x); circ.setAttribute("cy", m.y); circ.setAttribute("r", 16);
-
-      var num = document.createElementNS(SVGNS, "text");
-      num.setAttribute("class", "mk-num");
-      num.setAttribute("x", m.x); num.setAttribute("y", m.y + 5);
-      num.setAttribute("text-anchor", "middle");
-      num.textContent = m.n;
-
-      /* label with leader line */
-      var leader = document.createElementNS(SVGNS, "line");
-      leader.setAttribute("class", "mk-leader");
-      var above = m.n === 3 || m.n === 6 || m.n === 2;
-      var ly = above ? m.y - 26 : m.y + 34;
-      leader.setAttribute("x1", m.x); leader.setAttribute("y1", above ? m.y - 17 : m.y + 17);
-      leader.setAttribute("x2", m.x); leader.setAttribute("y2", ly - (above ? 12 : -4));
-
-      var lab = document.createElementNS(SVGNS, "text");
-      lab.setAttribute("class", "mk-lab");
-      lab.setAttribute("x", m.x); lab.setAttribute("y", ly);
-      lab.setAttribute("text-anchor", "middle");
-      lab.textContent = m.title.split(/[—:(]/)[0].trim().toUpperCase();
-
-      g.appendChild(hit); g.appendChild(ring); g.appendChild(circ); g.appendChild(num);
-      g.appendChild(leader); g.appendChild(lab);
-
-      g.addEventListener("click", function () { openMarker(m, g); });
-      g.addEventListener("keydown", function (e) {
-        if (e.key === "Enter" || e.key === " ") { e.preventDefault(); openMarker(m, g); }
+    window.addEventListener("scroll", function () {
+      if (prog.t) return; prog.t = true;
+      requestAnimationFrame(function () { prog(); prog.t = false; });
+    }, { passive: true });
+    window.addEventListener("resize", prog); prog();
+    var zones = document.querySelectorAll("[data-section]");
+    if ("IntersectionObserver" in window && sect) {
+      var io = new IntersectionObserver(function (es) {
+        es.forEach(function (e) { if (e.isIntersecting) sect.textContent = "▸ " + e.target.getAttribute("data-section"); });
+      }, { rootMargin: "-35% 0px -55% 0px" });
+      zones.forEach(function (z) { io.observe(z); });
+      sect.addEventListener("click", function () {
+        var cur = (sect.textContent || "").replace("▸ ", "").trim(), idx = -1, arr = Array.prototype.slice.call(zones);
+        arr.forEach(function (z, i) { if (z.getAttribute("data-section") === cur) idx = i; });
+        arr[(idx + 1) % arr.length].scrollIntoView({ behavior: reduced ? "auto" : "smooth" });
       });
-      layer.appendChild(g);
+    }
+    if (home) home.addEventListener("click", function () { window.scrollTo({ top: 0, behavior: reduced ? "auto" : "smooth" }); });
+    (function tick() {
+      if (!clock) return;
+      var d = new Date();
+      clock.textContent = String(d.getHours()).padStart(2, "0") + ":" + String(d.getMinutes()).padStart(2, "0");
+      setTimeout(tick, 20000);
+    })();
+  })();
+
+  /* ── copy link ── */
+  (function copy() {
+    var b = document.getElementById("copyLink");
+    if (!b) return;
+    b.addEventListener("click", function () {
+      var url = location.href;
+      if (navigator.clipboard) navigator.clipboard.writeText(url).then(function () { b.textContent = "✓ COPIED"; setTimeout(function(){ b.textContent = "⧉ COPY LINK"; }, 1600); });
     });
-  }
+  })();
 
-  var closeBtn = card ? card.querySelector(".dc-close") : null;
-  if (closeBtn) closeBtn.addEventListener("click", closeCard);
-  document.addEventListener("keydown", function (e) {
-    if (e.key === "Escape" && card && !card.hidden) closeCard();
-  });
-
-  /* staggered marker drop-in when plate scrolls into view */
-  var plate = document.getElementById("plate");
-  if (plate && "IntersectionObserver" in window) {
-    var pio = new IntersectionObserver(function (entries) {
-      entries.forEach(function (e) {
-        if (!e.isIntersecting) return;
-        pio.unobserve(plate);
-        var gs = layer.querySelectorAll(".marker");
-        gs.forEach(function (g, i) {
-          setTimeout(function () { g.classList.add("in"); }, 180 * i);
-        });
-        /* desktop: open marker 01 so the map reads as interactive immediately */
-        var first = layer.querySelector(".marker");
-        if (first && window.innerWidth >= 640 && !activeBtn) {
-          setTimeout(function () { openMarker(MARKERS[0], first); }, 180 * MARKERS.length + 250);
-        }
+  /* ── command palette ── */
+  (function pal() {
+    var back = document.getElementById("palBack"), input = document.getElementById("palInput"), list = document.getElementById("palList"), btn = document.getElementById("paletteBtn");
+    if (!back) return;
+    var cmds = [
+      { n: "go to runs — leaderboard lab", k: "runs ablation leaderboard", fn: function () { document.getElementById("runs").scrollIntoView(); } },
+      { n: "go to paper — IEEE YOLOv12", k: "paper ieee yolov", fn: function () { document.getElementById("paper").scrollIntoView(); } },
+      { n: "go to builds — UIU-Calendar", k: "builds calendar project", fn: function () { document.getElementById("builds").scrollIntoView(); } },
+      { n: "go to stack", k: "stack skills", fn: function () { document.getElementById("stack").scrollIntoView(); } },
+      { n: "hire me — email", k: "contact email hire", fn: function () { location.href = "mailto:root.saidul@gmail.com"; } },
+      { n: "open kaggle profile", k: "kaggle expert", fn: function () { open("https://www.kaggle.com/mohammadsaidulislam", "_blank"); } },
+      { n: "read IEEE paper", k: "ieee xplore", fn: function () { open("https://ieeexplore.ieee.org/document/11490261", "_blank"); } },
+      { n: "post this on 𝕏", k: "share tweet expert", fn: function () { open(document.getElementById("botShare").href, "_blank"); } },
+      { n: "unlock expert stamp", k: "expert easter", fn: function () { var s = document.getElementById("expertStamp"); if (s) s.classList.add("show"); window.scrollTo({ top: 0 }); } }
+    ];
+    var active = 0, filtered = cmds;
+    function openPal() { back.hidden = false; input.value = ""; draw(""); setTimeout(function(){ input.focus(); }, 30); }
+    function closePal() { back.hidden = true; }
+    function draw(q) {
+      q = q.toLowerCase();
+      filtered = cmds.filter(function (c) { return (c.n + " " + c.k).toLowerCase().indexOf(q) !== -1; });
+      active = 0;
+      list.innerHTML = "";
+      filtered.forEach(function (c, i) {
+        var li = document.createElement("li");
+        li.innerHTML = "<b>›</b> " + c.n.replace(/</g, "&lt;");
+        if (i === 0) li.classList.add("active");
+        li.addEventListener("click", function () { closePal(); c.fn(); });
+        list.appendChild(li);
       });
-    }, { threshold: 0.25 });
-    pio.observe(plate);
-  }
-
-  /* mobile: scale markers up so taps land and numbers read */
-  function sizeMarkers() {
-    if (!layer) return;
-    var small = window.innerWidth < 640;
-    layer.querySelectorAll(".marker").forEach(function (g) {
-      g.style.transformBox = "fill-box";
-      g.style.transformOrigin = "center";
-      g.style.transform = small ? "scale(2.1)" : "";
+      if (!filtered.length) list.innerHTML = "<li>no match — try ‘expert’</li>";
+    }
+    function move(d) {
+      active = (active + d + filtered.length) % Math.max(1, filtered.length);
+      Array.prototype.forEach.call(list.children, function (li, i) { li.classList.toggle("active", i === active); });
+    }
+    if (btn) btn.addEventListener("click", openPal);
+    document.addEventListener("keydown", function (e) {
+      if ((e.key === "k" || e.key === "K" || e.key === "/") && back.hidden && !/INPUT|TEXTAREA/.test(document.activeElement.tagName)) { e.preventDefault(); openPal(); }
+      if (e.key === "Escape" && !back.hidden) closePal();
+      if (!back.hidden && e.key === "ArrowDown") { e.preventDefault(); move(1); }
+      if (!back.hidden && e.key === "ArrowUp") { e.preventDefault(); move(-1); }
+      if (!back.hidden && e.key === "Enter" && filtered[active]) { closePal(); filtered[active].fn(); }
     });
-  }
-  sizeMarkers();
-  window.addEventListener("resize", sizeMarkers);
-
-  /* legend bar — highlight section in view */
-  var lgLinks = document.querySelectorAll(".legendbar a");
-  var sections = [];
-  lgLinks.forEach(function (a) {
-    var id = a.getAttribute("href").slice(1);
-    var s = document.getElementById(id);
-    if (s) sections.push({ link: a, sec: s });
-  });
-  if ("IntersectionObserver" in window && sections.length) {
-    var lio = new IntersectionObserver(function (entries) {
-      entries.forEach(function (e) {
-        if (!e.isIntersecting) return;
-        lgLinks.forEach(function (a) { a.style.color = ""; });
-        var hit = sections.find(function (s) { return s.sec === e.target; });
-        if (hit) hit.link.style.color = "var(--terra)";
-      });
-    }, { rootMargin: "-30% 0px -55% 0px" });
-    sections.forEach(function (s) { lio.observe(s.sec); });
-  }
+    input.addEventListener("input", function () { draw(input.value); });
+    back.addEventListener("click", function (e) { if (e.target === back) closePal(); });
+    // konami → expert rain
+    var seq = [], KON = "ArrowUp,ArrowUp,ArrowDown,ArrowDown,ArrowLeft,ArrowRight,ArrowLeft,ArrowRight,b,a";
+    document.addEventListener("keydown", function (e) {
+      seq.push(e.key); seq = seq.slice(-10);
+      if (seq.join(",") === KON) {
+        var s = document.getElementById("expertStamp"); if (s) s.classList.add("show");
+        document.getElementById("top").scrollIntoView({ behavior: reduced ? "auto" : "smooth" });
+      }
+    });
+  })();
 })();
